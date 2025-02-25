@@ -1,0 +1,10 @@
+app\domain\models\Users.class
+app\domain\models\Seller.class
+app\domain\models\Order.class
+app\domain\models\Pet.class
+app\domain\models\Invoices.class
+app\domain\models\Administrator.class
+app\domain\models\Veterinarian.class
+app\domain\models\MedicalHistory.class
+app\domain\models\Owner.class
+app\VeterinaryApplication.class
