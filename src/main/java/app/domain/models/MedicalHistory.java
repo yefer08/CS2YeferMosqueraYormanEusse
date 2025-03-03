@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MedicalHistory {
+    private String id;
     private LocalDateTime date;
     private Veterinarian veterinarian;
     private String reason;
@@ -18,14 +19,18 @@ public class MedicalHistory {
     private String diagnosis;
     private String procedure;
     private String medication;
-    private float dosage;
+    private String medicationDose;
     private String idOrder;
     private String vaccinationHistory;
     private String allergies;
     private String procedureDetails;
     private Boolean canceled;
 
-    public MedicalHistory(LocalDateTime date, Veterinarian veterinarian, String reason, String symptoms, String diagnosis, String procedure, String medication, float dosage, String idOrder, String vaccinationHistory, String allergies, String procedureDetails, Boolean canceled) {
+  
+    public MedicalHistory(String id, LocalDateTime date, Veterinarian veterinarian, String reason, String symptoms, 
+                          String diagnosis, String procedure, String medication, String medicationDose, String idOrder, 
+                          String vaccinationHistory, String allergies, String procedureDetails) {
+        this.id = id;
         this.date = date;
         this.veterinarian = veterinarian;
         this.reason = reason;
@@ -33,16 +38,16 @@ public class MedicalHistory {
         this.diagnosis = diagnosis;
         this.procedure = procedure;
         this.medication = medication;
-        this.dosage = dosage;
+        this.medicationDose = medicationDose;
         this.idOrder = idOrder;
         this.vaccinationHistory = vaccinationHistory;
         this.allergies = allergies;
         this.procedureDetails = procedureDetails;
-        this.canceled = canceled;
+        this.canceled = false; // Inicializar como no cancelado
     }
 
-    
-
-    
-    
+    public void cancelRecord() {
+        this.canceled = true;
+    }
 }
+

@@ -5,29 +5,26 @@
 package app.domain.models;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Order {
-    private String Orderid;
+    private String orderId;  
     private Pet idpet;
     private Owner CeduleOwner;
     private Veterinarian CeduleVeterinarian;
     private MedicalHistory medication;
     private LocalDateTime date;
 
-    public Order(String Orderid, Pet idpet, Owner CeduleOwner, Veterinarian CeduleVeterinarian, MedicalHistory medication, LocalDateTime date) {
-        this.Orderid = Orderid;
-        this.idpet = idpet;
-        this.CeduleOwner = CeduleOwner;
-        this.CeduleVeterinarian = CeduleVeterinarian;
-        this.medication = medication;
-        this.date = date;
-    }
-    
     
 }
