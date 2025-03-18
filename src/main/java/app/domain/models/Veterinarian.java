@@ -10,9 +10,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Veterinarian extends Users {
-    
-    public Veterinarian(int cedule, String name, int age, String username, String password, String role) {
-        super(cedule, name, age, username, password, role = "Veterinarian");
+
+    public Veterinarian(int id, String name, int age, String username, String password, String role) {
+        super(id, name, age, username, password, role);
     }
+
+   
+    
     
 }

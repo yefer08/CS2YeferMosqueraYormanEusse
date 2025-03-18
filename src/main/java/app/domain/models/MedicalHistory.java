@@ -4,14 +4,24 @@
  */
 package app.domain.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
-
+@Entity
+@Table(name = "medical_history")
 @Setter
 @Getter
 public class MedicalHistory {
-    private String id;
+
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private  String id;
     private LocalDateTime date;
     private Veterinarian veterinarian;
     private String reason;
@@ -20,16 +30,16 @@ public class MedicalHistory {
     private String procedure;
     private String medication;
     private String medicationDose;
-    private String idOrder;
+    private Order order;
     private String vaccinationHistory;
     private String allergies;
     private String procedureDetails;
     private Boolean canceled;
+    private Pet pet;
+    
+    public MedicalHistory() {}
 
-  
-    public MedicalHistory(String id, LocalDateTime date, Veterinarian veterinarian, String reason, String symptoms, 
-                          String diagnosis, String procedure, String medication, String medicationDose, String idOrder, 
-                          String vaccinationHistory, String allergies, String procedureDetails) {
+    public MedicalHistory(String id, LocalDateTime date, Veterinarian veterinarian, String reason, String symptoms, String diagnosis, String procedure, String medication, String medicationDose, Order order, String vaccinationHistory, String allergies, String procedureDetails, Boolean canceled, Pet pet) {
         this.id = id;
         this.date = date;
         this.veterinarian = veterinarian;
@@ -39,15 +49,20 @@ public class MedicalHistory {
         this.procedure = procedure;
         this.medication = medication;
         this.medicationDose = medicationDose;
-        this.idOrder = idOrder;
+        this.order = order;
         this.vaccinationHistory = vaccinationHistory;
         this.allergies = allergies;
         this.procedureDetails = procedureDetails;
-        this.canceled = false; // Inicializar como no cancelado
+        this.canceled = canceled;
+        this.pet = pet;
     }
 
+  
+  
     public void cancelRecord() {
         this.canceled = true;
     }
+
+   
 }
 

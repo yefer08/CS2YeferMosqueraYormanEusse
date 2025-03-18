@@ -16,17 +16,17 @@ public class Invoices {
     private Pet idpet;
     private Owner ceduleOwner;
     private Order Orderid;
-    private String nameproducr;
+    private String productName;
     private float value;
     private int quantity;
     private LocalDateTime date;
 
-    public Invoices(String idInvoice, Pet idpet, Owner ceduleOwner, Order Orderid, String nameproducr, float value, int quantity, LocalDateTime date) {
+    public Invoices(String idInvoice, Pet idpet, Owner ceduleOwner, Order Orderid, String productName, float value, int quantity, LocalDateTime date) {
         this.idInvoice = idInvoice;
         this.idpet = idpet;
         this.ceduleOwner = ceduleOwner;
         this.Orderid = Orderid;
-        this.nameproducr = nameproducr;
+        this.productName = productName;
         this.value = value;
         this.quantity = quantity;
         this.date = date;

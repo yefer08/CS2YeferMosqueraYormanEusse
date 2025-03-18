@@ -14,7 +14,7 @@ import lombok.Setter;
 public class Administrator extends Users {  
     
     public Administrator(int cedule, String name, int age, String username, String password, String role) {
-        super(cedule, name, age, username = "Admin" , password = "123456", role = "Admin" );
+        super(cedule, name, age, username = "Admin" , password = "123", role = "Admin" );
     }
     
 }
