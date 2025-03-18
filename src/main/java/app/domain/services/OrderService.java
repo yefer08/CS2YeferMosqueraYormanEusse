@@ -10,7 +10,12 @@ import app.domain.models.Order;
 import app.domain.models.Owner;
 import app.domain.models.Pet;
 import app.domain.models.Veterinarian;
+import app.exception.InvalidOrderDataException;
+import app.exception.OrderNotFoundException;
 import app.infrastructure.repositories.OrderServiceRepository;
+import app.ports.Orderport;
+import app.ports.PetPort;
+import app.ports.Usersport;
 
 /**
  *
@@ -18,25 +23,39 @@ import app.infrastructure.repositories.OrderServiceRepository;
  */
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+@Service
 public class OrderService {
-    private final OrderServiceRepository orderRepository; 
+   
     
-    public OrderService(OrderServiceRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    @Autowired
+    private PetPort petPort;
+    @Autowired
+    private Usersport usersport;
+    @Autowired
+    private Orderport orderport;
+
+    
+  
+    public void createOrder(Order order) {
+        
+        Pet pet = petPort.findByidpet(order.getPet());
+        if (pet == null) {
+            throw new InvalidOrderDataException("Error: La mascota asociada no puede ser nula.");
+        }
+        order.setCeduleOwner(pet.getIdOwnwer());
+        Veterinarian veterinarian = usersport.findByid(order.getCeduleVeterinarian());
+        if ( veterinarian== null) {
+            throw new InvalidOrderDataException("Error: El veterinario no puede ser nulo.");
+        }
+        orderport.save(order);
     }
 
-    public Order createOrder(Pet idPet, Owner ceduleOwner, Veterinarian ceduleVeterinarian, MedicalHistory medication) {
-        String orderId = UUID.randomUUID().toString();  // Generar un ID único
-        LocalDateTime date = LocalDateTime.now();       // Fecha actual
-
-        Order order = new Order(orderId, idPet, ceduleOwner, ceduleVeterinarian, medication, date);
-        orderRepository.save(order); // Guardar en el repositorio
-
-        System.out.println("Orden creada con ID: " + order.getOrderId());
-        return order;
-    }
-    public Order findOrderById(String orderId) {
-        return orderRepository.findById(orderId);
+    public void saveOrder(Order order) {
+        if (order == null) {
+            throw new IllegalArgumentException("Error: La orden médica no puede ser nula.");
+        }
+        orderport.save(order);
     }
 }

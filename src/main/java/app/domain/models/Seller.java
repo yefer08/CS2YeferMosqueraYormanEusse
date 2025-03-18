@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Seller extends Users {
     
     public Seller(int cedule, String name, int age, String username, String password, String role) {
-        super(cedule, name, age, username, password, role = "Seller");
+        super(cedule, name, age, username, password, role);
     }
     
 }

@@ -11,14 +11,14 @@ import lombok.Setter;
 @Getter
 public class Pet {
     private String namepet;
-    private int  idOwnwer;
+    private Owner  idOwnwer;
     private int agepet;
     private String idpet;
     private String racepet;
     private String caracteristic;
     private float weight;
 
-    public Pet(String namepet, int idOwnwer, int agepet, String idpet, String racepet, String caracteristic, float weight) {
+    public Pet(String namepet, Owner idOwnwer, int agepet, String idpet, String racepet, String caracteristic, float weight) {
         this.namepet = namepet;
         this.idOwnwer = idOwnwer;
         this.agepet = agepet;
@@ -27,6 +27,8 @@ public class Pet {
         this.caracteristic = caracteristic;
         this.weight = weight;
     }
+
+    
     
     
     
