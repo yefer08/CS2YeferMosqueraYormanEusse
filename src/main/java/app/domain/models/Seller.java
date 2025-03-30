@@ -7,13 +7,16 @@ package app.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ *
+ * @author yefer_cordoba
+ */
 
 @Getter
 @Setter
-public class Seller extends Users {
+public class Seller extends User {
     
-    public Seller(int cedule, String name, int age, String username, String password, String role) {
-        super(cedule, name, age, username, password, role);
-    }
-    
+    public Seller(String id, String name, int age, String username, String password, String role) {
+        super(id, name, age, username, password, role);
+    } 
 }

@@ -10,15 +10,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Owner extends Users {
+public class Owner extends User {
     private Pet idpet;
 
-    public Owner(int id, String name, int age, String username, String password, String role) {
+    public Owner(String id, String name, int age, String username, String password, String role) {
         super(id, name, age, username, password, role);
     }
-    
-  
-    
-    
-  
 }

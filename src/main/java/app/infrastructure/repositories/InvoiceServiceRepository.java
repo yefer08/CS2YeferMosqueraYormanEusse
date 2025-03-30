@@ -4,34 +4,17 @@
  */
 package app.infrastructure.repositories;
 
-import app.domain.models.Invoices;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- *
- * @author User
- */
-public class InvoiceServiceRepository {
-    private List<Invoices> invoices = new ArrayList<>();
-    private int invoiceCounter = 1;
-    
-    public void save(Invoices invoice) {
-        invoices.add(invoice);
-    }
-    
-    public Invoices findById(String id) {
-    return invoices.stream()
-                         .filter(r -> r.getIdInvoice().equals(id))  // Filtra por ID
-                         .findFirst()                        // Toma el primer resultado encontrado
-                         .orElse(null);                      // Si no encuentra nada, devuelve null
-    
-    
-    
-    }
-    public List<Invoices>findAll(){
-        return new ArrayList<>(invoices);
-    }
-    
-    
+
+
+import app.Entities.InvoiceEntity;
+import app.domain.models.Invoices;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+public interface InvoiceServiceRepository extends JpaRepository<InvoiceEntity, String> {
+
+    Optional<InvoiceEntity> findById(String id); 
+
+    public void save(Invoices invoice);
 }

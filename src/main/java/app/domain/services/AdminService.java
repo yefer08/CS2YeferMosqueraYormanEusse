@@ -6,52 +6,48 @@ package app.domain.services;
 
 import app.domain.models.Owner;
 import app.domain.models.Seller;
-import app.domain.models.Users;
+import app.domain.models.User;
 import app.domain.models.Veterinarian;
 import app.exception.InvalidRoleException;
 import app.exception.UserAlreadyExistsException;
-import app.ports.Usersport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import app.ports.Userport;
 
 @Service
 public class AdminService {
-   
+
     @Autowired
-    private Usersport userport;
-    
-   public void createUser(Users user) {
-    
-    Users existingUser = userport.findById(user.getId());
-    if (existingUser != null) {
-        throw new UserAlreadyExistsException("Error: El usuario ingresado ya existe.");
+    private Userport userport;
+
+    public void createUser(User user) {
+
+        User existingUser = userport.findById(user.getId());
+        if (existingUser != null) {
+            throw new UserAlreadyExistsException("Error: El usuario ingresado ya existe.");
+        }
+
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            throw new InvalidRoleException("Error: El usuario debe tener un rol asignado.");
+        }
+
+        String role = user.getRole().toLowerCase();
+
+        
+        User newUser = factory(user.getId(), user.getName(), user.getAge(), user.getUsername(), user.getPassword(), role);
+
+        userport.save(newUser);
     }
 
     
-    if (user.getRole() == null || user.getRole().isEmpty()) {
-        throw new InvalidRoleException("Error: El usuario debe tener un rol asignado.");
+    public User factory(String id, String name, int age, String username, String password, String role) {
+        return switch (role.toLowerCase()) {
+            case "veterinarian" -> new Veterinarian(id, name, age, username, password, role);
+            case "seller" -> new Seller(id, name, age, username, password, role);
+            case "Owner" -> new Owner(id, name, age, username, password, role);
+            default -> throw new InvalidRoleException("Error: Rol no válido.");
+        };
     }
-
-    String role = user.getRole().toLowerCase();
-
-    
-    Users newUser;
-    switch (role) {
-        case "veterinarian" -> newUser = new Veterinarian(user.getId(), user.getName(), user.getAge(), user.getUsername(), user.getPassword(), role);
-        case "seller" -> newUser = new Seller(user.getId(), user.getName(), user.getAge(), user.getUsername(), user.getPassword(), role);
-        case "owner" -> newUser = new Owner(user.getId(), user.getName(), user.getAge(), user.getUsername(), user.getPassword(), role);
-        default -> throw new InvalidRoleException("Error: Rol no válido. Solo se permiten 'veterinarian', 'seller' y 'owner'.");
-    }
-
-    userport.save(newUser);
 }
 
-
-
-
-    
-
-   
-}
 

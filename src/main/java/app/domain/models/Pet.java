@@ -10,26 +10,25 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Pet {
+
     private String namepet;
-    private Owner  idOwnwer;
+    private Owner idOwnwer;
     private int agepet;
-    private String idpet;
+    private String id;
     private String racepet;
     private String caracteristic;
     private float weight;
+    private String species; // Nueva propiedad para la especie
 
-    public Pet(String namepet, Owner idOwnwer, int agepet, String idpet, String racepet, String caracteristic, float weight) {
+    // Constructor actualizado
+    public Pet(String namepet, Owner idOwnwer, int agepet, String idpet, String racepet, String caracteristic, float weight, String species) {
         this.namepet = namepet;
         this.idOwnwer = idOwnwer;
         this.agepet = agepet;
-        this.idpet = idpet;
+        this.id = idpet;
         this.racepet = racepet;
         this.caracteristic = caracteristic;
         this.weight = weight;
+        this.species = species; // Asignar el valor de especie
     }
-
-    
-    
-    
-    
 }

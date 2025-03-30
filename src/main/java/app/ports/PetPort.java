@@ -5,14 +5,17 @@
 package app.ports;
 
 import app.domain.models.Pet;
+import java.util.List;
 
 /**
  *
  * @author User
  */
 public interface PetPort {
-  public Pet findByidpet(Pet pet);
 
- 
+
+    public Pet findByidpet(String petId);
+
+    public List<Pet> findByOwnerId(String ownerId);
     
 }

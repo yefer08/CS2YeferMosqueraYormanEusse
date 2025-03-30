@@ -6,41 +6,42 @@ package app.domain.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+/**
+ *
+ * @author yefer_cordoba
+ */
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "orders")
 public class Order {
 
- 
-    private String orderId; 
-
-    @ManyToOne
-    @JoinColumn(name = "pet_id", nullable = false) // Relación con la mascota
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID) // Genera un UUID automático
+    private String id;  
     private Pet pet;
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false) // Relación con el dueño
-    private Owner ceduleOwner;
-
-    @ManyToOne
-    @JoinColumn(name = "veterinarian_id", nullable = false) // Relación con el veterinario
-    private Veterinarian ceduleVeterinarian;
-
-    @OneToOne
-    @JoinColumn(name = "medical_history_id") // Una orden tiene un historial médico
+    private Owner owner;
+    private Veterinarian veterinarian; 
     private MedicalHistory medication;
-
-    @Column(nullable = false)
     private LocalDateTime date;
+    private String details;
+    private boolean completed;
+
+    public Order(String id, Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medication, LocalDateTime date, String details,Boolean completed) {
+        this.id = id;
+        this.pet = pet;
+        this.owner = owner;
+        this.veterinarian = veterinarian;
+        this.medication = medication;
+        this.date = date;
+        this.details = details;
+        this.completed = completed;
+    }    
 
     
 }
+
+    
 

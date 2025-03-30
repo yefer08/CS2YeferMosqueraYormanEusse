@@ -10,13 +10,13 @@ import app.domain.models.Order;
 import app.domain.models.Owner;
 import app.domain.models.Pet;
 import app.exception.InvalidInvoiceDataException;
-import app.infrastructure.repositories.InvoiceServiceRepository;
-import app.ports.Invoicesport;
 import app.ports.Orderport;
 import app.ports.PetPort;
-import app.ports.Usersport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import app.ports.Userport;
+import app.ports.InvoicePort;
+import java.util.UUID;
 
 /**
  *
@@ -24,36 +24,51 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class InvoiceService {
-   
-     
-      public InvoiceService(InvoiceServiceRepository invoiceRepository) {
-    }
-    @Autowired
-    private PetPort petPort;
-    @Autowired
-    private Usersport usersport;
-    @Autowired
-    private Orderport orderPort;
-    @Autowired 
-    private Invoicesport invoiceport;
-    
 
-    public void  generateInvoice(Invoices invoice) {
-        
-        Pet pet = petPort.findByidpet(invoice.getIdpet());
+    private final InvoicePort invoicePort;
+    private final PetPort petPort;
+    private final Userport userPort;
+    private final Orderport orderPort;
+
+    @Autowired
+    public InvoiceService(InvoicePort invoicePort, PetPort petPort, Userport userPort, Orderport orderPort) {
+        this.invoicePort = invoicePort;
+        this.petPort = petPort;
+        this.userPort = userPort;
+        this.orderPort = orderPort;
+    }
+
+    public void generateInvoice(Invoices invoice) {
+        // 🔹 Generar ID automáticamente si es nulo
+        if (invoice.getIdInvoice() == null || invoice.getIdInvoice().isBlank()) {
+            invoice.setIdInvoice(UUID.randomUUID().toString());
+        }
+
+        // 🔹 Validar existencia de la mascota
+        Pet pet = petPort.findByidpet(invoice.getPet().getId());
         if (pet == null) {
-            throw new InvalidInvoiceDataException("Error: La mascota asociada no puede ser nula.");
+            throw new InvalidInvoiceDataException("❌ Error: La mascota no existe.");
         }
-        invoice.setCeduleOwner(pet.getIdOwnwer());
-        Owner owner = usersport.findByid(invoice.getCeduleOwner());
-        if (owner == null) {
-            throw new InvalidInvoiceDataException("Error: El dueño no puede ser nulo.");
-        }
-        Order order = orderPort.findByorderId(invoice.getOrderid().toString());
-        if (order == null) {
-            throw new InvalidInvoiceDataException("Error: La orden no puede ser nula.");
-        }
-        invoiceport.save(invoice);
-    }
 
+        // 🔹 Asignar ID del dueño a la factura
+        invoice.setOwner(pet.getIdOwnwer());
+
+        // 🔹 Validar existencia del dueño
+        Owner owner = userPort.findByid(invoice.getOwner().getId());
+        if (owner == null) {
+            throw new InvalidInvoiceDataException("❌ Error: El dueño no existe.");
+        }
+
+        // 🔹 Validar orden médica SOLO si es medicamento
+        if (invoice.getOrder() != null) {  // <- Aquí se corrigió la validación
+            Order order = orderPort.findByorderId(invoice.getOrder().getId());
+            if (order == null) {
+                throw new InvalidInvoiceDataException("❌ Error: La orden médica no existe.");
+            }
+        }
+
+        // 🔹 Guardar la factura
+        invoicePort.save(invoice);
+        System.out.println("✅ Factura generada con éxito. ID: " + invoice.getIdInvoice());
+    }
 }
