@@ -9,12 +9,17 @@ package app.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ *
+ * @author yefer_cordoba
+ */
+
 @Setter
 @Getter
-public class Administrator extends Users {  
+public class Administrator extends User {  
     
-    public Administrator(int cedule, String name, int age, String username, String password, String role) {
-        super(cedule, name, age, username = "Admin" , password = "123", role = "Admin" );
+    public Administrator(String id, String name, int age, String username, String password, String role) {
+        super(id, name, age, username = "Admin" , password = "123", role = "Admin" );
     }
     
 }

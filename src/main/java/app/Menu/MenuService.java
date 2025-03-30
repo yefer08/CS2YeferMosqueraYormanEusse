@@ -4,36 +4,34 @@
  */
 package app.Menu;
 
-import app.domain.services.MedicalHistoryService;
-import java.util.Scanner;
-
 public class MenuService {
-   /* private final VeterinarianMenu veterinarianMenu;
+
+    private final AdminMenu adminMenu;
+    private final VeterinarianMenu veterinarianMenu;
     private final SellerMenu sellerMenu;
     private final OwnerMenu ownerMenu;
 
-    public MenuService(MedicalHistoryService medicalHistoryService) {
-        this.veterinarianMenu = new VeterinarianMenu(medicalHistoryService);
-        this.sellerMenu = new SellerMenu();
-        this.ownerMenu = new OwnerMenu();
+    public MenuService(AdminMenu adminMenu, VeterinarianMenu veterinarianMenu,
+            SellerMenu sellerMenu, OwnerMenu ownerMenu) {
+        this.adminMenu = adminMenu;
+        this.veterinarianMenu = veterinarianMenu;
+        this.sellerMenu = sellerMenu;
+        this.ownerMenu = ownerMenu;
     }
 
-    public void showMenu(String role) {
+    public void showMenu(String role, String ownerId) {
         switch (role.toLowerCase()) {
-            case "veterinarian":
+            case "admin" ->
+                adminMenu.showAdminMenu();
+            case "veterinarian" ->
                 veterinarianMenu.showVeterinarianMenu();
-                break;
-            case "seller":
+            case "seller" ->
                 sellerMenu.showSellerMenu();
-                break;
-            case "owner":
-                ownerMenu.showOwnerMenu();
-                break;
-            default:
-                System.out.println("⚠️ Error: Rol no reconocido.");
+            case "owner" ->
+                ownerMenu.showOwnerMenu(ownerId);
+            default ->
+                System.out.println("❌ Rol no reconocido. Contacte con un administrador.");
         }
-    }*/
+    }
 }
-
-
 

@@ -5,14 +5,23 @@
 package app.ports;
 
 import app.domain.models.MedicalHistory;
+import java.util.List;
 
 /**
  *
  * @author User
  */
-public interface MedicalHistoryport {
+public interface MedicalHistoryPort {
 
     public void save(MedicalHistory history);
+
+    public List<MedicalHistory> findAll();
+    
+    MedicalHistory findById(String id);
+
+    List<MedicalHistory> findByPetId(String petId);
+
+    void deleteById(String id);
     
     
 }
