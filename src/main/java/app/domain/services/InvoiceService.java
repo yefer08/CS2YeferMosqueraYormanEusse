@@ -9,30 +9,66 @@ import app.domain.models.Invoices;
 import app.domain.models.Order;
 import app.domain.models.Owner;
 import app.domain.models.Pet;
-import app.infrastructure.repositories.InvoiceServiceRepository;
-import java.time.LocalDateTime;
+import app.exception.InvalidInvoiceDataException;
+import app.ports.Orderport;
+import app.ports.PetPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import app.ports.Userport;
+import app.ports.InvoicePort;
 import java.util.UUID;
 
 /**
  *
  * @author User
  */
+@Service
 public class InvoiceService {
-   
-     private final InvoiceServiceRepository invoiceRepository;
-     
-      public InvoiceService(InvoiceServiceRepository invoiceRepository) {
-        this.invoiceRepository = invoiceRepository;
+
+    private final InvoicePort invoicePort;
+    private final PetPort petPort;
+    private final Userport userPort;
+    private final Orderport orderPort;
+
+    @Autowired
+    public InvoiceService(InvoicePort invoicePort, PetPort petPort, Userport userPort, Orderport orderPort) {
+        this.invoicePort = invoicePort;
+        this.petPort = petPort;
+        this.userPort = userPort;
+        this.orderPort = orderPort;
     }
 
-    public Invoices generateInvoice(Pet idpet, Owner ceduleOwner,Order Orderid,String nameproducr, float price, int quantity) {
-        String invoiceId = UUID.randomUUID().toString();  
-        LocalDateTime date = LocalDateTime.now();   
-    
-        Invoices invoice = new Invoices(invoiceId, idpet, ceduleOwner, Orderid, nameproducr, price, quantity, date);
-         invoiceRepository.save(invoice);
-        System.out.println("Factura generada con ID: " + invoice.getIdInvoice());
-        return invoice; 
-    }
+    public void generateInvoice(Invoices invoice) {
+        // 🔹 Generar ID automáticamente si es nulo
+        if (invoice.getIdInvoice() == null || invoice.getIdInvoice().isBlank()) {
+            invoice.setIdInvoice(UUID.randomUUID().toString());
+        }
 
+        // 🔹 Validar existencia de la mascota
+        Pet pet = petPort.findByidpet(invoice.getPet().getId());
+        if (pet == null) {
+            throw new InvalidInvoiceDataException("❌ Error: La mascota no existe.");
+        }
+
+        // 🔹 Asignar ID del dueño a la factura
+        invoice.setOwner(pet.getIdOwnwer());
+
+        // 🔹 Validar existencia del dueño
+        Owner owner = userPort.findByid(invoice.getOwner().getId());
+        if (owner == null) {
+            throw new InvalidInvoiceDataException("❌ Error: El dueño no existe.");
+        }
+
+        // 🔹 Validar orden médica SOLO si es medicamento
+        if (invoice.getOrder() != null) {  // <- Aquí se corrigió la validación
+            Order order = orderPort.findByorderId(invoice.getOrder().getId());
+            if (order == null) {
+                throw new InvalidInvoiceDataException("❌ Error: La orden médica no existe.");
+            }
+        }
+
+        // 🔹 Guardar la factura
+        invoicePort.save(invoice);
+        System.out.println("✅ Factura generada con éxito. ID: " + invoice.getIdInvoice());
+    }
 }

@@ -5,38 +5,64 @@
 
 package app.domain.services;
 
+
+
 import app.domain.models.MedicalHistory;
 import app.domain.models.Order;
 import app.domain.models.Owner;
 import app.domain.models.Pet;
 import app.domain.models.Veterinarian;
+import app.exception.InvalidOrderDataException;
 import app.infrastructure.repositories.OrderServiceRepository;
+import app.ports.Orderport;
+import app.ports.PetPort;
+import app.ports.Userport;
 
-/**
- *
- * @author User
- */
 import java.time.LocalDateTime;
-import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderService {
-    private final OrderServiceRepository orderRepository; 
+   
+    @Autowired
+    private PetPort petPort;
     
-    public OrderService(OrderServiceRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    @Autowired
+    private Userport userport;
+    
+    @Autowired
+    private Orderport orderport;
+
+    public void createOrder(Order order) {
+        if (order == null) {
+            throw new InvalidOrderDataException("Error: La orden no puede ser nula.");
+        }
+
+        // Buscar la mascota por ID
+        Pet pet = petPort.findByidpet(order.getPet().getId());
+        if (pet == null) {
+            throw new InvalidOrderDataException("Error: La mascota asociada no puede ser nula.");
+        }
+
+        // Asignar el dueño de la mascota a la orden
+        order.setOwner(pet.getIdOwnwer());  // Corregido getIdOwner()
+
+        // Buscar veterinario por ID
+        Veterinarian veterinarian = userport.findVeterinarianById(order.getVeterinarian().getId());
+        if (veterinarian == null) {
+            throw new InvalidOrderDataException("Error: El veterinario no puede ser nulo.");
+        }
+
+        // Guardar la orden
+        orderport.save(order);
     }
 
-    public Order createOrder(Pet idPet, Owner ceduleOwner, Veterinarian ceduleVeterinarian, MedicalHistory medication) {
-        String orderId = UUID.randomUUID().toString();  // Generar un ID único
-        LocalDateTime date = LocalDateTime.now();       // Fecha actual
-
-        Order order = new Order(orderId, idPet, ceduleOwner, ceduleVeterinarian, medication, date);
-        orderRepository.save(order); // Guardar en el repositorio
-
-        System.out.println("Orden creada con ID: " + order.getOrderId());
-        return order;
-    }
-    public Order findOrderById(String orderId) {
-        return orderRepository.findById(orderId);
+    public void saveOrder(Order order) {
+        if (order == null) {
+            throw new IllegalArgumentException("Error: La orden médica no puede ser nula.");
+        }
+        orderport.save(order);
     }
 }
+
