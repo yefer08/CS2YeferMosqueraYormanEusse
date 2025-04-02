@@ -16,10 +16,6 @@ import java.util.UUID;
 
 @Repository
 public interface MedicalHistoryRepository extends JpaRepository<MedicalHistoryEntity, UUID> {
-
-
-
-    
     List<MedicalHistoryEntity> findByPetId(String idpet);
 
     public Object findById(String historyId);

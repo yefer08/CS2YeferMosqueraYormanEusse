@@ -7,18 +7,14 @@ package app.domain.services;
 
 
 
-import app.domain.models.MedicalHistory;
 import app.domain.models.Order;
-import app.domain.models.Owner;
 import app.domain.models.Pet;
 import app.domain.models.Veterinarian;
 import app.exception.InvalidOrderDataException;
-import app.infrastructure.repositories.OrderServiceRepository;
 import app.ports.Orderport;
 import app.ports.PetPort;
 import app.ports.Userport;
 
-import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

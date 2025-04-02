@@ -5,13 +5,20 @@
 package app.Menu;
 
 import app.Entities.MedicalHistoryEntity;
+import app.domain.models.Appointment;
+import app.domain.models.Owner;
 import app.domain.models.Pet;
+import app.domain.models.Veterinarian;
+import app.domain.services.AppointmentService;
 import app.domain.services.MedicalHistoryService;
 import app.ports.PetPort;
+import app.ports.Userport;
+import java.time.format.DateTimeParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 @Component
 public class OwnerMenu {
@@ -19,11 +26,16 @@ public class OwnerMenu {
     private final Scanner scanner = new Scanner(System.in);
     private final MedicalHistoryService medicalHistoryService;
     private final PetPort petPort;
+    private final AppointmentService appointmentService;
+    private final Userport userPort;
+   
 
     @Autowired
-    public OwnerMenu(MedicalHistoryService medicalHistoryService, PetPort petPort) {
+    public OwnerMenu(MedicalHistoryService medicalHistoryService, PetPort petPort, AppointmentService appointmentService,Userport userPort) {
         this.medicalHistoryService = medicalHistoryService;
         this.petPort = petPort;
+        this.userPort = userPort;
+        this.appointmentService = appointmentService;
     }
 
     public void showOwnerMenu(String ownerId) {
@@ -40,8 +52,8 @@ public class OwnerMenu {
                 switch (option) {
                     case 1 ->
                         verHistorialClinico(ownerId);
-                    //case 2 ->
-                        //solicitarCita();
+                    case 2 ->
+                         solicitarCita();
                     case 3 -> {
                         System.out.println("🔴 Sesión cerrada.");
                         return;
@@ -95,7 +107,8 @@ public class OwnerMenu {
         }
     }
 
-  /*  private void solicitarCita() {
+    private void solicitarCita() {
+        
         System.out.println("\n📅 Solicitando cita...");
         System.out.print("Ingrese el ID de la mascota: ");
         String petId = scanner.nextLine().trim();
@@ -106,16 +119,64 @@ public class OwnerMenu {
             return;
         }
 
+        System.out.print("Ingrese el ID del veterinario: ");
+        String veterinarianId = scanner.nextLine().trim();
+        Veterinarian veterinarian = userPort.findVeterinarianById(veterinarianId); // Suponiendo que tienes un userPort para obtener Veterinarios
+        if (veterinarian == null) {
+            System.out.println("❌ Veterinario no encontrado con ID: " + veterinarianId);
+            return;
+        }
+
+        System.out.print("Ingrese el ID del dueño: ");
+        String ownerId = scanner.nextLine().trim();
+        Owner owner = userPort.findByid(ownerId);  // Suponiendo que también puedes obtener Owners
+        if (owner == null) {
+            System.out.println("❌ Dueño no encontrado con ID: " + ownerId);
+            return;
+        }
+
         System.out.print("Ingrese la fecha de la cita (YYYY-MM-DD): ");
         String dateInput = scanner.nextLine().trim();
 
         System.out.print("Ingrese el motivo de la cita: ");
         String reason = scanner.nextLine().trim();
 
+        System.out.print("Ingrese los síntomas: ");
+        String symptoms = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el diagnóstico (opcional): ");
+        String diagnosis = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el tratamiento sugerido (opcional): ");
+        String treatment = scanner.nextLine().trim();
+
         try {
-            Appointment appointment = new Appointment(UUID.randomUUID().toString(), pet, LocalDate.parse(dateInput), reason);
+            // Intentar crear la cita con los datos ingresados
+            Appointment appointment = new Appointment(
+                    UUID.randomUUID().toString(), // ID único generado
+                    veterinarian, // Veterinario
+                    owner, // Dueño
+                    pet, // Mascota
+                    reason, // Motivo
+                    symptoms, // Síntomas
+                    diagnosis, // Diagnóstico
+                    treatment, // Tratamiento
+                    dateInput // Fecha de la cita
+            );
+
+            // Intentar programar la cita
             appointmentService.scheduleAppointment(appointment);
-            System.out.println("✅ Cita solicitada con exito");
+
+            // Si todo sale bien
+            System.out.println("✅ Cita solicitada con éxito");
+        } catch (DateTimeParseException e) {
+            // Si el formato de fecha es incorrecto
+            System.out.println("❌ Formato de fecha inválido. Asegúrese de usar el formato YYYY-MM-DD.");
+        } catch (Exception e) {
+            // Captura otros errores (por ejemplo, conflictos de cita)
+            System.out.println("❌ Error al solicitar la cita: " + e.getMessage());
         }
-    }*/
+    }
+
+
 }

@@ -7,14 +7,17 @@ app\ports\PetPort.class
 app\infrastructure\repositories\OrderServiceRepository.class
 app\Menu\LoginService.class
 app\Menu\LoginMenu.class
+app\domain\services\AppointmentService.class
 app\Menu\VeterinarianMenu.class
 app\exception\AuthenticationException.class
 app\infrastructure\repositories\MedicalHistoryRepository.class
 app\infrastructure\repositories\PetRepository.class
 app\ports\Orderport.class
+app\ports\AppointmentPort.class
 app\domain\services\MedicalHistoryService.class
 app\Converted\UserConverter.class
 app\exception\UserNotFoundException.class
+app\infrastructure\repositories\AppointmentRepository.class
 app\Converted\MedicalHistoryCoverter.class
 app\adapter\MedicalHistoryAdapter.class
 app\Entities\OrderEntity.class
@@ -22,6 +25,7 @@ app\Menu\MenuService.class
 app\Menu\SellerMenu.class
 app\Entities\PetEntity.class
 app\domain\models\Seller.class
+app\domain\models\Appointment.class
 app\ports\InvoicePort.class
 app\exception\InvalidRoleException.class
 app\Menu\OwnerMenu.class
@@ -43,6 +47,7 @@ app\ports\Userport.class
 app\domain\services\OrderService.class
 app\exception\UserAlreadyExistsException.class
 app\exception\OrderNotFoundException.class
+app\Entities\AppointmentEntity.class
 app\domain\models\Veterinarian.class
 app\VeterinaryApplication.class
 app\domain\services\InvoiceService.class
@@ -53,4 +58,5 @@ app\domain\services\AdminService.class
 app\Entities\UserEntity.class
 app\domain\models\User.class
 app\exception\InvalidInvoiceDataException.class
+app\adapter\AppointmentAdapter.class
 app\domain\models\Administrator.class

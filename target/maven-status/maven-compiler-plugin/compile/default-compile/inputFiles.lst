@@ -1,3 +1,4 @@
+C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\adapter\AppointmentAdapter.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\adapter\InvoiceAdapter.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\adapter\MedicalHistoryAdapter.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\adapter\OrderAdapter.java
@@ -8,6 +9,7 @@ C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Converted\PetConverter.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Converted\UserConverter.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\Administrator.java
+C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\Appointment.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\Invoices.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\MedicalHistory.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\Order.java
@@ -17,9 +19,11 @@ C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\User.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\models\Veterinarian.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\services\AdminService.java
+C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\services\AppointmentService.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\services\InvoiceService.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\services\MedicalHistoryService.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\domain\services\OrderService.java
+C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Entities\AppointmentEntity.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Entities\InvoiceEntity.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Entities\MedicalHistoryEntity.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Entities\OrderEntity.java
@@ -35,6 +39,7 @@ C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\exception\UserAlreadyExistsException.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\exception\UsernameAlreadyInUseException.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\exception\UserNotFoundException.java
+C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\infrastructure\repositories\AppointmentRepository.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\infrastructure\repositories\InvoiceServiceRepository.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\infrastructure\repositories\MedicalHistoryRepository.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\infrastructure\repositories\OrderServiceRepository.java
@@ -47,6 +52,7 @@ C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Menu\OwnerMenu.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Menu\SellerMenu.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\Menu\VeterinarianMenu.java
+C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\ports\AppointmentPort.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\ports\InvoicePort.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\ports\MedicalHistoryPort.java
 C:\Users\User\Desktop\CS2YeferMosqueraYormanEusse\VeterinaryApplication\src\main\java\app\ports\Orderport.java
