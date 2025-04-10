@@ -12,6 +12,11 @@ public class VeterinaryApplication {
 
    public static void main(String[] args) {
 		SpringApplication.run(VeterinaryApplication.class, args);
-                
+                 menu.showLoginMenu(); //implementacipn del menu
+       	 	adminMenu.showAdminMenu();
+        	ownerMenu.showOwnerMenu(ownerId);
+        	sellerMenu.showSellerMenu();
+        	veterianrianMenu.showVeterinarianMenu();
+        	menuService.showMenu(role, ownerId);
 	}
 }
