@@ -33,7 +33,7 @@ public class MedicalHistoryEntity {
     private String reason;
     private String symptoms;
     private String diagnosis;
-    private String procedure;
+    private String medicalPprocedure;
     private String medication;
     private String medicationDose;
 
@@ -56,7 +56,7 @@ public class MedicalHistoryEntity {
         this.reason = reason;
         this.symptoms = symptoms;
         this.diagnosis = diagnosis;
-        this.procedure = procedure;
+        this.medicalProcedure = procedure;
         this.medication = medication;
         this.medicationDose = medicationDose;
         this.order = order;
@@ -115,12 +115,12 @@ public class MedicalHistoryEntity {
         this.diagnosis = diagnosis;
     }
 
-    public String getProcedure() {
-        return procedure;
+    public String getMedicalProcedure() {
+        return medicalProcedure;
     }
 
-    public void setProcedure(String procedure) {
-        this.procedure = procedure;
+    public void setMEdicalProcedure(String procedure) {
+        this.mediaclaProcedure = medicalProcedure;
     }
 
     public String getMedication() {
