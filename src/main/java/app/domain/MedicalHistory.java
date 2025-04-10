@@ -21,7 +21,7 @@ public class MedicalHistory {
     private String reason;
     private String symptoms;
     private String diagnosis;
-    private String procedure;
+    private String medicalprocedure;
     private String medication;
     private String medicationDose;
     private Order order;
