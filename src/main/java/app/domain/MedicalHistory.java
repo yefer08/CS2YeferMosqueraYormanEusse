@@ -43,7 +43,7 @@ public class MedicalHistory {
         this.reason = reason;
         this.symptoms = symptoms;
         this.diagnosis = diagnosis;
-        this.procedure = procedure;
+        this.medicalProcedure = procedure;
         this.medication = medication;
         this.medicationDose = medicationDose;
         this.order = order;
