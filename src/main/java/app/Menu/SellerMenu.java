@@ -88,7 +88,7 @@ public class SellerMenu {
         }
 
         System.out.print("Ingrese el ID del dueño: ");
-        String ownerId = scanner.nextLine().trim();
+        long ownerId = scanner.nextLong();
         Owner owner = Userport.findByid(ownerId);
         if (owner == null) {
             System.out.println("❌ Dueño no encontrado con ID: " + ownerId);
@@ -116,7 +116,7 @@ public class SellerMenu {
         }
 
         System.out.print("Ingrese el ID del dueño: ");
-        String ownerId = scanner.nextLine().trim();
+        long ownerId = scanner.nextLong();
         Owner owner = Userport.findByid(ownerId);
         if (owner == null) {
             System.out.println("❌ Dueño no encontrado con ID: " + ownerId);

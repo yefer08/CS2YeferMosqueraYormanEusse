@@ -26,7 +26,7 @@ public class PetService {
             throw new InvalidDataException("⚠️ El nombre de la mascota no puede estar vacío.");
         }
 
-        if (owner == null || owner.getId() == null) {
+        if (owner == null) {
             throw new InvalidDataException("⚠️ El dueño de la mascota no es válido.");
         }
 

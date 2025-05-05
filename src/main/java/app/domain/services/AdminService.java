@@ -21,8 +21,11 @@ public class AdminService {
     private Userport userport;
 
     public void createUser(User user) {
+        if (user.getUsername() == null || user.getUsername().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de usuario no puede estar vacío.");
+        }
 
-        User existingUser = userport.findById(user.getId());
+        User existingUser = userport.findByUsername(user.getUsername());
         if (existingUser != null) {
             throw new UserAlreadyExistsException("Error: El usuario ingresado ya existe.");
         }
@@ -32,19 +35,17 @@ public class AdminService {
         }
 
         String role = user.getRole().toLowerCase();
-
-        
-        User newUser = factory(user.getId(), user.getName(), user.getAge(), user.getUsername(), user.getPassword(), role);
+        User newUser = factory(user.getName(), user.getAge(), user.getUsername(), user.getPassword(), role);
 
         userport.save(newUser);
     }
 
     
-    public User factory(String id, String name, int age, String username, String password, String role) {
+    public User factory(String name, int age, String username, String password, String role) {
         return switch (role.toLowerCase()) {
-            case "veterinarian" -> new Veterinarian(id, name, age, username, password, role);
-            case "seller" -> new Seller(id, name, age, username, password, role);
-            case "owner" -> new Owner(id, name, age, username, password, role);
+            case "veterinarian" -> new Veterinarian( name, age, username, password, role);
+            case "seller" -> new Seller( name, age, username, password, role);
+            case "owner" -> new Owner( name, age, username, password, role);
             default -> throw new InvalidRoleException("Error: Rol no válido.");
         };
     }

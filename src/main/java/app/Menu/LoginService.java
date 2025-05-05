@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.Menu;
 
 import app.Entities.UserEntity;
@@ -12,13 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LoginService {
+
     private final UserRepository userRepository;
     private final MenuService menuService;
 
-   
-    
-    
-
+    // Constructor
     public LoginService(UserRepository userRepository, MenuService menuService) {
         this.userRepository = userRepository;
         this.menuService = menuService;
@@ -37,11 +31,9 @@ public class LoginService {
         }
 
         String role = user.getRole();
-        String ownerId = role.equalsIgnoreCase("owner") ? user.getId() : null;
-        
+        long ownerId = "owner".equalsIgnoreCase(role) ? user.getId() : -1L;  // Usar -1 como valor predeterminado para roles no "owner"
+
         System.out.println("✅ Inicio de sesión exitoso. Bienvenido, " + user.getName() + "!");
         menuService.showMenu(role, ownerId);
     }
 }
-
-

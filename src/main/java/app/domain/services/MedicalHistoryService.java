@@ -55,8 +55,8 @@ public class MedicalHistoryService {
         }
 
         // 🔹 Validar la existencia del veterinario
-        if (veterinarian == null || veterinarian.getId() == null) {
-            throw new InvalidDataException("⚠️ Ingrese la información del veterinario.");
+        if (veterinarian == null) {
+            throw new InvalidDataException("⚠️ El objeto Veterinario no puede ser nulo.");
         }
 
         // 🔹 Validar la existencia de la orden médica

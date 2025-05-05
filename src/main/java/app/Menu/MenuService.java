@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.Menu;
 
 import org.springframework.stereotype.Component;
@@ -22,19 +18,25 @@ public class MenuService {
         this.ownerMenu = ownerMenu;
     }
 
-    public void showMenu(String role, String ownerId) {
+    public void showMenu(String role, Long ownerId) {
+        // Usamos un switch más robusto con verificación adicional para roles no reconocidos
         switch (role.toLowerCase()) {
-            case "admin" ->
+            case "admin":
                 adminMenu.showAdminMenu();
-            case "veterinarian" ->
+                break;
+            case "veterinarian":
                 veterinarianMenu.showVeterinarianMenu();
-            case "seller" ->
+                break;
+            case "seller":
                 sellerMenu.showSellerMenu();
-            case "owner" ->
+                break;
+            case "owner":
                 ownerMenu.showOwnerMenu(ownerId);
-            default ->
+                break;
+            default:
                 System.out.println("❌ Rol no reconocido. Contacte con un administrador.");
+                // Opcional: Podrías lanzar una excepción o redirigir a un menú de error si lo prefieres
+                throw new IllegalArgumentException("Error: Rol no reconocido.");
         }
     }
 }
-

@@ -86,7 +86,7 @@ public class VeterinarianMenu {
         }
 
         System.out.print("Ingrese cédula del veterinario: ");
-        String vetId = scanner.nextLine().trim();
+        long vetId = scanner.nextLong();
         Veterinarian veterinarian = userport.findVeterinarianById(vetId);
         if (veterinarian == null) {
             System.out.println("⚠️ ID de veterinario no fue encontrado.");
@@ -237,7 +237,7 @@ public class VeterinarianMenu {
         String species = scanner.nextLine().trim();
 
         System.out.print("Ingrese ID del dueño: ");
-        String idOwner = scanner.nextLine().trim();
+        long idOwner = scanner.nextLong();
 
         Owner owner = (Owner) userport.findById(idOwner);
 

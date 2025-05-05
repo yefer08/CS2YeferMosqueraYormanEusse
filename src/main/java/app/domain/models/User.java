@@ -15,15 +15,15 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class  User {
-    protected String id;
+    protected Long id;
     protected String name;
     protected int age;
     protected String username;
     protected String password;
     protected String role;
 
-    public User(String id, String name, int age, String username, String password, String role) {
-        this.id = id;
+    public User( String name, int age, String username, String password, String role) {
+        
         this.name = name;
         this.age = age;
         this.username = username;

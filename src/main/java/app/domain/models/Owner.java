@@ -13,7 +13,8 @@ import lombok.Setter;
 public class Owner extends User {
     private Pet idpet;
 
-    public Owner(String id, String name, int age, String username, String password, String role) {
-        super(id, name, age, username, password, role);
-    }
+    public Owner( String name, int age, String username, String password, String role) {
+        super( name, age, username, password, role);
+        this.idpet = idpet;
+    } 
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.Menu;
 
 import app.Entities.MedicalHistoryEntity;
@@ -26,7 +22,7 @@ public class OwnerMenu {
         this.petPort = petPort;
     }
 
-    public void showOwnerMenu(String ownerId) {
+    public void showOwnerMenu(Long ownerId) {
         while (true) {
             System.out.println("\n--- 🐾 Menú Propietario ---");
             System.out.println("1. Ver historial clínico de mis mascotas");
@@ -41,7 +37,7 @@ public class OwnerMenu {
                     case 1 ->
                         verHistorialClinico(ownerId);
                     //case 2 ->
-                        //solicitarCita();
+                    //solicitarCita();
                     case 3 -> {
                         System.out.println("🔴 Sesión cerrada.");
                         return;
@@ -55,24 +51,28 @@ public class OwnerMenu {
         }
     }
 
-    private void verHistorialClinico(String ownerId) {
+    private void verHistorialClinico(Long ownerId) {
         System.out.println("\n📖 Mostrando historial clínico de sus mascotas...");
-        List<Pet> pets = petPort.findByOwnerId(ownerId);
+        try {
+            List<Pet> pets = petPort.findByOwnerId(ownerId);
 
-        if (pets == null || pets.isEmpty()) {
-            System.out.println("⚠️ No tiene mascotas registradas.");
-            return;
-        }
+            if (pets == null || pets.isEmpty()) {
+                System.out.println("⚠️ No tiene mascotas registradas.");
+                return;
+            }
 
-        for (Pet pet : pets) {
-            mostrarInformacionMascota(pet);
-            List<MedicalHistoryEntity> medicalHistories = medicalHistoryService.findByPetId(pet.getId());
-            mostrarHistorialClinico(medicalHistories);
+            for (Pet pet : pets) {
+                mostrarInformacionMascota(pet);
+                List<MedicalHistoryEntity> medicalHistories = medicalHistoryService.findByPetId(pet.getId());
+                mostrarHistorialClinico(medicalHistories);
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener el historial clínico. Intente más tarde.");
         }
     }
 
     private void mostrarInformacionMascota(Pet pet) {
-        System.out.println("\n🐕 Mascota: " + pet.getNamepet() + " (ID: " + pet.getId()+ ")");
+        System.out.println("\n🐕 Mascota: " + pet.getNamepet() + " (ID: " + pet.getId() + ")");
     }
 
     private void mostrarHistorialClinico(List<MedicalHistoryEntity> medicalHistories) {
@@ -95,7 +95,7 @@ public class OwnerMenu {
         }
     }
 
-  /*  private void solicitarCita() {
+    /*private void solicitarCita() {
         System.out.println("\n📅 Solicitando cita...");
         System.out.print("Ingrese el ID de la mascota: ");
         String petId = scanner.nextLine().trim();
@@ -116,6 +116,8 @@ public class OwnerMenu {
             Appointment appointment = new Appointment(UUID.randomUUID().toString(), pet, LocalDate.parse(dateInput), reason);
             appointmentService.scheduleAppointment(appointment);
             System.out.println("✅ Cita solicitada con exito");
+        } catch (Exception e) {
+            System.out.println("❌ Error al solicitar la cita: " + e.getMessage());
         }
     }*/
 }

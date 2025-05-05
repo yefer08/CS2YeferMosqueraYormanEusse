@@ -11,14 +11,14 @@ import app.domain.models.Veterinarian;
 public interface Userport {
 
     // 🔹 Buscar un usuario por ID
-    User findById(String id);
+    User findById(long id);
 
     // 🔹 Guardar un nuevo usuario
     void save(User newUser);
 
-    public Owner findByid(String id);
+    public Owner findByid(long id);
     
-    Veterinarian findVeterinarianById(String id);
+    Veterinarian findVeterinarianById(long id);
     
     User findByUsername(String username);
 }

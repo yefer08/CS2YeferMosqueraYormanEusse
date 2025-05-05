@@ -16,13 +16,11 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Administrator extends User {  
+public class Administrator extends User {
 
-    public Administrator(String id, String name, int age, String username, String password, String role) {
-        super(id, name, age, username, password, role);
+    public Administrator(String name, int age, String username, String password, String role) {
+        super( name, age, username, password, role);
     }
-    
-    
-    
 }
+
     

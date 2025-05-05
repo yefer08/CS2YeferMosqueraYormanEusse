@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 
     Optional<UserEntity> findByUsername(String username);
@@ -20,14 +20,11 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 
     public void save(User user);
 
-    @Override
-    public Optional<UserEntity> findById(String id);
+    public Optional<UserEntity> findById(long id);
 
-    @Override
-    public boolean existsById(String id);
+    public boolean existsById(long id);
 
-    @Override
-    public void deleteById(String id);
+    public void deleteById(long id);
 
 }
 

@@ -16,7 +16,7 @@ public interface PetPort {
 
     public Pet findByidpet(String petId);
 
-    public List<Pet> findByOwnerId(String ownerId);
+    public List<Pet> findByOwnerId(Long ownerId);
 
     public void save(Pet pet);
     

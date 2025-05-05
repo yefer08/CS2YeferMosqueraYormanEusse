@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.adapter;
 
 import app.Converted.PetConverter;
@@ -24,7 +20,6 @@ public class PetAdapter implements PetPort {
     @Autowired
     private PetRepository petRepository; // Repositorio para manejar entidades persistentes
 
-
     @Override
     public Pet findByidpet(String petId) {
         if (petId == null || petId.trim().isEmpty()) {
@@ -32,21 +27,16 @@ public class PetAdapter implements PetPort {
         }
 
         // Buscar la mascota en la base de datos
-        Optional<PetEntity> optionalPetEntity = (Optional<PetEntity>) petRepository.findById(petId);
-
-        // Validar si existe la mascota
-        if (!optionalPetEntity.isPresent()) {
-            throw new RuntimeException("⚠️ Mascota no encontrada con ID: " + petId);
-        }
+        PetEntity petEntity = petRepository.findById(petId)
+                .orElseThrow(() -> new RuntimeException("⚠️ Mascota no encontrada con ID: " + petId));
 
         // Convertir PetEntity a Pet y retornar el resultado
-        PetEntity petEntity = optionalPetEntity.get();
         return convertToDomainPet(petEntity);
     }
-    // Buscar todas las mascotas asociadas a un propietario usando su ID
+
     @Override
-    public List<Pet> findByOwnerId(String ownerId) {
-        if (ownerId == null || ownerId.trim().isEmpty()) {
+    public List<Pet> findByOwnerId(Long ownerId) {
+        if (ownerId == null) {
             throw new IllegalArgumentException("⚠️ El ID del propietario no puede estar vacío.");
         }
 
@@ -69,9 +59,11 @@ public class PetAdapter implements PetPort {
             return null;
         }
 
+        Owner owner = petEntity.getOwner() != null ? (Owner) UserConverter.convertToDomainUser(petEntity.getOwner()) : null;
+
         return new Pet(
                 petEntity.getName(), // Nombre de la mascota
-                petEntity.getOwner() != null ? (Owner) UserConverter.convertToDomainUser(petEntity.getOwner()) : null, // Convertir Owner si no es nulo
+                owner, // Convertir Owner si no es nulo
                 petEntity.getAge(),
                 petEntity.getId(),
                 petEntity.getBreed(),
@@ -86,7 +78,4 @@ public class PetAdapter implements PetPort {
         PetEntity petEntity = PetConverter.convertToPetEntity(pet);
         petRepository.save(petEntity);
     }
-
-
-
 }

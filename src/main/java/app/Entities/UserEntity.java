@@ -5,7 +5,6 @@
 package app.Entities;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +20,8 @@ import lombok.Setter;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // UUID para ID único
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column(nullable = false)
     private String name;
@@ -39,12 +38,10 @@ public class UserEntity {
     private String role; 
 
     public UserEntity() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID().toString();
-                    }
+       
     }
 
-    public UserEntity(String id, int age, String username, String password, String role, String name) {
+    public UserEntity( int age, String username, String password, String role, String name) {
        
         this.name = name;
         this.age = age;
@@ -54,3 +51,4 @@ public class UserEntity {
     }
 
 }
+    

@@ -28,7 +28,6 @@ public class DataInitializer implements CommandLineRunner {
 
         if (existingAdmin == null) {
             Administrator admin = new Administrator(
-                    "",
                     "carlos",
                     30,
                     "Admin",

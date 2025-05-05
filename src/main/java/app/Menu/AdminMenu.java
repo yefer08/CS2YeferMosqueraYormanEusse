@@ -87,8 +87,7 @@ public class AdminMenu {
 
         try {
             // Crear el usuario utilizando el método factory en AdminService
-            String id = UUID.randomUUID().toString();
-            User newUser = adminService.factory(id, name, age, username, password, role);
+            User newUser = adminService.factory(name, age, username, password, role);
             adminService.createUser(newUser); 
 
             System.out.println("✅ Usuario creado con éxito: " + name);
