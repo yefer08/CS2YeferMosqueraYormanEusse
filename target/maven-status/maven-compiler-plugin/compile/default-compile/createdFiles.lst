@@ -1,2 +1,6 @@
+app\Validator\UserValidator.class
+app\exception\GlobalExceptionHandler.class
+app\rest\AdminController.class
+app\rest\request\UserRequest.class
 app\domain\services\DataInitializer.class
 app\domain\services\PetService.class

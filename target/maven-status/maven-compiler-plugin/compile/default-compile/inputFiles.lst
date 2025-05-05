@@ -28,6 +28,7 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\OrderEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\PetEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\UserEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\AuthenticationException.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\GlobalExceptionHandler.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\InvalidDataException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\InvalidInvoiceDataException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\InvalidOrderDataException.java
@@ -54,4 +55,7 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\MedicalHistoryPort.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\Orderport.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\PetPort.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\Userport.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\AdminController.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\UserRequest.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Validator\UserValidator.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\VeterinaryApplication.java
