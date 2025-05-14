@@ -49,6 +49,10 @@ public class AdminService {
             default -> throw new InvalidRoleException("Error: Rol no válido.");
         };
     }
+    
+    public User getUserById(long id) {
+        return userport.findById(id);
+    }
 }
 
 

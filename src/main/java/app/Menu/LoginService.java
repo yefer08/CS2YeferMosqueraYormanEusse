@@ -6,11 +6,11 @@ import app.exception.UserNotFoundException;
 import app.infrastructure.repositories.UserRepository;
 import org.springframework.stereotype.Component;
 
-@Component
+/*@Component
 public class LoginService {
 
     private final UserRepository userRepository;
-    private final MenuService menuService;
+    //private final MenuService menuService;
 
     // Constructor
     public LoginService(UserRepository userRepository, MenuService menuService) {
@@ -34,6 +34,6 @@ public class LoginService {
         long ownerId = "owner".equalsIgnoreCase(role) ? user.getId() : -1L;  // Usar -1 como valor predeterminado para roles no "owner"
 
         System.out.println("✅ Inicio de sesión exitoso. Bienvenido, " + user.getName() + "!");
-        menuService.showMenu(role, ownerId);
+       // menuService.showMenu(role, ownerId);
     }
-}
+}*/

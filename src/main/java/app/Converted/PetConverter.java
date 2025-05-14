@@ -36,14 +36,14 @@ public class PetConverter {
         }
 
         return new PetEntity(
-                pet.getId(), // ID único de la mascota
+             
                 pet.getNamepet(), // Nombre de la mascota
                 pet.getSpecies(), // Especie de la mascota
                 pet.getRacepet(), // Raza
                 pet.getAgepet(), // Edad de la mascota
                 pet.getCaracteristic(), // Características adicionales
                 pet.getWeight(), // Peso de la mascota
-                UserConverter.convertToUserEntity(pet.getIdOwnwer()) // Convertir Owner a UserEntity
+                null // Convertir Owner a UserEntity
         );
     }
     

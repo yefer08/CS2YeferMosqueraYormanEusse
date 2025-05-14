@@ -22,6 +22,11 @@ public abstract class  User {
     protected String password;
     protected String role;
 
+    public User() {
+    }
+    
+    
+
     public User( String name, int age, String username, String password, String role) {
         
         this.name = name;

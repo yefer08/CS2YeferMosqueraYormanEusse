@@ -114,4 +114,23 @@ public class UserConverter {
                 "seller"
         );
     }
+    public static Veterinarian convertToVeterinarian(UserEntity userEntity) {
+        if (userEntity == null) {
+            throw new IllegalArgumentException("⚠️ El objeto UserEntity no puede ser nulo.");
+        }
+
+        if (!"veterinarian".equalsIgnoreCase(userEntity.getRole())) {
+            throw new IllegalArgumentException("⚠️ El usuario no tiene el rol de veterinario.");
+        }
+
+        return new Veterinarian(
+              
+                userEntity.getName(),
+                userEntity.getAge(),
+                userEntity.getUsername(),
+                userEntity.getPassword(),
+                userEntity.getRole()
+        );
+    }
+
 }

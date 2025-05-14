@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 public class Owner extends User {
     private Pet idpet;
-
+    
     public Owner( String name, int age, String username, String password, String role) {
         super( name, age, username, password, role);
         this.idpet = idpet;

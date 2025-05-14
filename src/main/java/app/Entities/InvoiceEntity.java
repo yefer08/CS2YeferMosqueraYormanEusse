@@ -4,9 +4,6 @@
  */
 package app.Entities;
 
-import app.domain.models.Order;
-import app.domain.models.Owner;
-import app.domain.models.Pet;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;

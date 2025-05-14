@@ -2,7 +2,7 @@ package app.Menu;
 
 import org.springframework.stereotype.Component;
 
-@Component
+/*@Component
 public class MenuService {
 
     private final AdminMenu adminMenu;
@@ -18,7 +18,7 @@ public class MenuService {
         this.ownerMenu = ownerMenu;
     }
 
-    public void showMenu(String role, Long ownerId) {
+  /*  public void showMenu(String role, Long ownerId) {
         // Usamos un switch más robusto con verificación adicional para roles no reconocidos
         switch (role.toLowerCase()) {
             case "admin":
@@ -38,5 +38,5 @@ public class MenuService {
                 // Opcional: Podrías lanzar una excepción o redirigir a un menú de error si lo prefieres
                 throw new IllegalArgumentException("Error: Rol no reconocido.");
         }
-    }
-}
+    }*/
+//}

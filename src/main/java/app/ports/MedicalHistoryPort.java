@@ -6,22 +6,22 @@ package app.ports;
 
 import app.domain.models.MedicalHistory;
 import java.util.List;
+import java.util.Optional;
 
-/**
- *
- * @author User
- */
+
 public interface MedicalHistoryPort {
 
     public void save(MedicalHistory history);
 
     public List<MedicalHistory> findAll();
     
-    MedicalHistory findById(String id);
+    Optional<MedicalHistory> findById(String id);
 
     List<MedicalHistory> findByPetId(String petId);
 
     void deleteById(String id);
+
+    public boolean existsById(String id);
     
     
 }

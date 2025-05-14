@@ -67,7 +67,7 @@ public class OrderAdapter implements Orderport {
         }
 
         return new Order(
-                entity.getId(), // ID del pedido
+             
                 convertToDomainPet(entity.getPet()), // Convertir PetEntity a Pet
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()), // Convertir UserEntity a Owner
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()), // Convertir UserEntity a Veterinarian
@@ -85,7 +85,7 @@ public class OrderAdapter implements Orderport {
         }
 
         return new PetEntity(
-                pet.getId(), // ID único de la mascota
+               
                 pet.getNamepet(), // Nombre de la mascota
                 pet.getSpecies(), // Especie
                 pet.getRacepet(), // Raza

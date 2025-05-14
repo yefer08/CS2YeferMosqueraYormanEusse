@@ -6,6 +6,7 @@ import app.domain.services.AdminService;
 import app.exception.InvalidRoleException;
 import app.exception.UserAlreadyExistsException;
 import app.rest.request.UserRequest;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,15 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("❌ Error inesperado: " + e.getMessage());
         }
     }
-
-
+    
+    @GetMapping("/mostrar-usuario/{id}")
+    public ResponseEntity<?> showUserById(@PathVariable long id) {
+        try {
+            User user = adminService.getUserById(id);
+            return ResponseEntity.ok(user);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("❌ " + e.getMessage());
+        }
+    }
 
 }

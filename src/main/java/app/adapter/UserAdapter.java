@@ -80,24 +80,14 @@ public class UserAdapter implements Userport {
 
     @Override
     public Veterinarian findVeterinarianById(long id) {
-        Optional<UserEntity> userEntityOptional = userrepository.findById(id);
+        UserEntity userEntity = userrepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("⚠️ Veterinario con ID " + id + " no encontrado."));
 
-        if (userEntityOptional.isPresent()) {
-            UserEntity userEntity = userEntityOptional.get();
-
-            if ("veterinarian".equalsIgnoreCase(userEntity.getRole())) {
-                return new Veterinarian(
-                        
-                        userEntity.getName(),
-                        userEntity.getAge(),
-                        userEntity.getUsername(),
-                        userEntity.getPassword(),
-                        userEntity.getRole()
-                );
-            }
+        if (!"veterinarian".equalsIgnoreCase(userEntity.getRole())) {
+            throw new IllegalArgumentException("⚠️ El usuario con ID " + id + " no es un veterinario.");
         }
 
-        throw new RuntimeException("Error: No se encontró un veterinario con ID " + id);
+        return UserConverter.convertToVeterinarian(userEntity);
     }
 
     public UserEntity convertToUserEntity(Veterinarian veterinarian) {
@@ -145,4 +135,11 @@ public class UserAdapter implements Userport {
 
         return (User) UserConverter.convertToDomainUser(userEntity);
     }
+
+    @Override
+    public UserEntity findEntityById(long ownerId) {
+        return userrepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("❌ Dueño no encontrado con ID: " + ownerId));
+    }
+
 }

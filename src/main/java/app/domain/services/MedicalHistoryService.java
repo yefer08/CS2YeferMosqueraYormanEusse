@@ -4,125 +4,103 @@
  */
 package app.domain.services;
 
-import app.Entities.MedicalHistoryEntity;
 import app.domain.models.MedicalHistory;
 import app.domain.models.Order;
 import app.domain.models.Pet;
-import app.domain.models.Veterinarian;
+import app.domain.models.User;
 import app.exception.InvalidDataException;
 import app.infrastructure.repositories.MedicalHistoryRepository;
+import app.ports.MedicalHistoryPort;
 import app.ports.Orderport;
 import app.ports.PetPort;
 import app.ports.Userport;
-import app.ports.MedicalHistoryPort;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Service
 public class MedicalHistoryService {
-    
-    @Autowired
-    private PetPort petPort;
-    @Autowired
-    private Orderport orderPort;
-    @Autowired
-    private MedicalHistoryPort medicalHistoryPort;
-    @Autowired
-    private Userport userport;
-    
-    private final MedicalHistoryRepository medicalHistoryRepository;
-    
-    public MedicalHistoryService(MedicalHistoryRepository medicalHistoryRepository) {
-        this.medicalHistoryRepository = medicalHistoryRepository;
+
+
+    private final PetPort petPort;
+    private final Orderport orderPort;
+    private final MedicalHistoryPort medicalHistoryPort;
+
+    public MedicalHistoryService(PetPort petPort, Orderport orderPort, MedicalHistoryPort medicalHistoryPort,
+                                 Userport userport, MedicalHistoryRepository medicalHistoryRepository) {
+        this.petPort = petPort;
+        this.orderPort = orderPort;
+        this.medicalHistoryPort = medicalHistoryPort;
     }
- 
 
-    public void createMedicalHistory(
-            LocalDateTime date, Veterinarian veterinarian, String reason, String symptoms,
-            String diagnosis, String procedure, String medication, String medicationDose,
-            String orderId, String vaccinationHistory, String allergies, String procedureDetails,
-            Boolean canceled, String petId) {
-
-        // 🔹 Validar la existencia de la mascota
-        Pet pet = petPort.findByidpet(petId);
+    public void createMedicalHistory(MedicalHistory medicalHistory) {
+        // 🔹 Validar existencia de la mascota
+        Pet pet = petPort.findByidpet(medicalHistory.getPet().getId());
         if (pet == null) {
             throw new InvalidDataException("⚠️ ID de mascota no encontrado");
         }
 
-        // 🔹 Validar la existencia del veterinario
+        // 🔹 Validar existencia del veterinario
+        User veterinarian = medicalHistory.getVeterinarian();
         if (veterinarian == null) {
             throw new InvalidDataException("⚠️ El objeto Veterinario no puede ser nulo.");
         }
 
-        // 🔹 Validar la existencia de la orden médica
-        Order order = orderPort.findByorderId(orderId);
-        if (order == null || order.getId()== null) {
+        // 🔹 Validar existencia de la orden médica
+        Order order = orderPort.findByorderId(medicalHistory.getOrder().getId());
+        if (order == null || order.getId() == null) {
             throw new InvalidDataException("⚠️ Orden no encontrada");
         }
 
-        // 🔹 Validar que los campos obligatorios no estén vacíos
-        if (reason == null || reason.trim().isEmpty()) {
-            throw new InvalidDataException("⚠️ La razón de la consulta no puede estar vacía.");
-        }
-        if (symptoms == null || symptoms.trim().isEmpty()) {
-            throw new InvalidDataException("⚠️ Los síntomas no pueden estar vacíos.");
-        }
-        if (diagnosis == null || diagnosis.trim().isEmpty()) {
-            throw new InvalidDataException("⚠️ El diagnóstico no puede estar vacío.");
-        }
-        if (procedure == null || procedure.trim().isEmpty()) {
-            throw new InvalidDataException("⚠️ El procedimiento no puede estar vacío.");
-        }
-
-        // 🔹 Crear la historia clínica
-        MedicalHistory newHistory = new MedicalHistory(
-                date, veterinarian, reason, symptoms, diagnosis, procedure,
-                medication, medicationDose, order, vaccinationHistory, allergies, procedureDetails, canceled, pet
-        );
+        // 🔹 Validar datos obligatorios
+        validateMedicalHistory(medicalHistory);
 
         // 🔹 Guardar la historia clínica
-        medicalHistoryPort.save(newHistory);
+        medicalHistoryPort.save(medicalHistory);
         System.out.println("✅ Historia clínica guardada exitosamente.");
     }
-    
-    public List<MedicalHistoryEntity> findAll() {
-        return medicalHistoryRepository.findAll(); 
+
+    private void validateMedicalHistory(MedicalHistory medicalHistory) {
+        if (medicalHistory.getReason() == null || medicalHistory.getReason().trim().isEmpty()) {
+            throw new InvalidDataException("⚠️ La razón de la consulta no puede estar vacía.");
+        }
+        if (medicalHistory.getSymptoms() == null || medicalHistory.getSymptoms().trim().isEmpty()) {
+            throw new InvalidDataException("⚠️ Los síntomas no pueden estar vacíos.");
+        }
+        if (medicalHistory.getDiagnosis() == null || medicalHistory.getDiagnosis().trim().isEmpty()) {
+            throw new InvalidDataException("⚠️ El diagnóstico no puede estar vacío.");
+        }
+        if (medicalHistory.getMedicalProcedure()== null || medicalHistory.getMedicalProcedure().trim().isEmpty()) {
+            throw new InvalidDataException("⚠️ El procedimiento no puede estar vacío.");
+        }
     }
 
-    public List<MedicalHistoryEntity> findByPetId(String idpet) {
-        return medicalHistoryRepository.findByPetId(idpet); // 🔹 Llamada correcta al método del repositorio
+    public List<MedicalHistory> findAll() {
+        return medicalHistoryPort.findAll();
     }
-    
+
+    public List<MedicalHistory> findByPetId(String petId) {
+        return medicalHistoryPort.findByPetId(petId);
+    }
 
     public MedicalHistory findById(String id) {
-        Optional<MedicalHistory> optionalHistory = (Optional<MedicalHistory>) medicalHistoryRepository.findById(id);
-        if (optionalHistory.isPresent()) {
-            return optionalHistory.get();
-        } else {
-            throw new RuntimeException("⚠️ Historia clínica no encontrada con ID: " + id);
-        }
-
+        return medicalHistoryPort.findById(id)
+                .orElseThrow(() -> new RuntimeException("⚠️ Historia clínica no encontrada con ID: " + id));
     }
 
     public void updateMedicalHistory(MedicalHistory history) {
-        if (!medicalHistoryRepository.existsById(history.getId())) {
+        if (!medicalHistoryPort.existsById(history.getId())) {
             throw new RuntimeException("⚠️ No se puede actualizar, la historia clínica no existe.");
         }
-        medicalHistoryRepository.save(history);
+        medicalHistoryPort.save(history);
         System.out.println("✅ Historia clínica actualizada correctamente.");
     }
 
     public void deleteMedicalHistory(String historyId) {
-        if (!medicalHistoryRepository.existsById(historyId)) {
+        if (!medicalHistoryPort.existsById(historyId)) {
             throw new RuntimeException("⚠️ No se puede eliminar, la historia clínica no existe.");
         }
-        medicalHistoryRepository.deleteById(historyId);
+        medicalHistoryPort.deleteById(historyId);
         System.out.println("✅ Historia clínica eliminada correctamente.");
     }
 }
-

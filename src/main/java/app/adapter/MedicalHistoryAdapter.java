@@ -72,16 +72,11 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
 
 
     @Override
-    public MedicalHistory findById(String id) {
+    public Optional<MedicalHistory> findById(String id) {
         Optional<MedicalHistoryEntity> optionalEntity = (Optional<MedicalHistoryEntity>) medicalHistoryRepository.findById(id);
-        // Verificar si el Optional tiene un valor presente
-        if (optionalEntity.isPresent()) {
-            // Si está presente, convertir a objeto de dominio
-            return convertToDomain(optionalEntity.get());
-        } else {
-            throw new RuntimeException("⚠️ Historia clínica no encontrada con ID: " + id);
-        }
+        return optionalEntity.map(entity -> convertToDomain(entity));
     }
+
 
 
     @Override
@@ -145,7 +140,7 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
         }
 
         return new Order(
-                entity.getId(),
+     
                 convertToDomainPet(entity.getPet()),
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()),
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()),
@@ -162,7 +157,7 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
         }
 
         return new PetEntity(
-                pet.getId(),
+               
                 pet.getNamepet(),
                 pet.getSpecies(),
                 pet.getRacepet(),
@@ -188,6 +183,11 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
                 petEntity.getWeight(),
                 petEntity.getSpecies()
         );
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        return medicalHistoryRepository.existsById(id); // ✅ Implementación correcta
     }
 
 

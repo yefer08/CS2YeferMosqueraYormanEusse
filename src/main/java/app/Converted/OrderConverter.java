@@ -24,7 +24,7 @@ public class OrderConverter {
         }
 
         return new Order(
-                entity.getId(), // ID de la orden
+               
                 convertToDomainPet(entity.getPet()), // Convertir PetEntity a Pet
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()), // Convertir UserEntity a Owner
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()), // Convertir UserEntity a Veterinarian

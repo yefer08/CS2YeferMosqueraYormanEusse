@@ -4,6 +4,7 @@
  */
 package app.ports;
 
+import app.Entities.UserEntity;
 import app.domain.models.Owner;
 import app.domain.models.User;
 import app.domain.models.Veterinarian;
@@ -21,5 +22,7 @@ public interface Userport {
     Veterinarian findVeterinarianById(long id);
     
     User findByUsername(String username);
+
+    public UserEntity findEntityById(long ownerId);
 }
 

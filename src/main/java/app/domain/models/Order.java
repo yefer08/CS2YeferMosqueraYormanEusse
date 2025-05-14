@@ -8,18 +8,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
-
-/**
- *
- * @author yefer_cordoba
- */
-
 @Setter
 @Getter
 public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Genera un UUID automático
     private String id;  
     private Pet pet;
     private Owner owner;
@@ -29,8 +20,8 @@ public class Order {
     private String details;
     private boolean completed;
 
-    public Order(String id, Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medication, LocalDateTime date, String details,Boolean completed) {
-        this.id = id;
+    public Order( Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medication, LocalDateTime date, String details,Boolean completed) {
+      
         this.pet = pet;
         this.owner = owner;
         this.veterinarian = veterinarian;

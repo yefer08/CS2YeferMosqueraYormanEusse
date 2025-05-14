@@ -3,15 +3,16 @@ package app.adapter;
 import app.Converted.PetConverter;
 import app.Converted.UserConverter;
 import app.Entities.PetEntity;
+import app.Entities.UserEntity;
 import app.domain.models.Owner;
 import app.domain.models.Pet;
 import app.infrastructure.repositories.PetRepository;
+import app.infrastructure.repositories.UserRepository;
 import app.ports.PetPort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,6 +20,8 @@ public class PetAdapter implements PetPort {
 
     @Autowired
     private PetRepository petRepository; // Repositorio para manejar entidades persistentes
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Pet findByidpet(String petId) {
@@ -76,6 +79,21 @@ public class PetAdapter implements PetPort {
     @Override
     public void save(Pet pet) {
         PetEntity petEntity = PetConverter.convertToPetEntity(pet);
+
+        // 💡 Aquí está la magia:
+        if (pet.getIdOwnwer() != null && pet.getIdOwnwer().getId() != null) {
+            UserEntity ownerEntity = userRepository.findById(pet.getIdOwnwer().getId())
+                    .orElseThrow(() -> new RuntimeException("❌ Dueño no encontrado con ID: " + pet.getIdOwnwer().getId()));
+
+            petEntity.setOwner(ownerEntity); // Asignas el dueño persistido
+        }
+
         petRepository.save(petEntity);
     }
+
+    @Override
+    public void saveEntity(PetEntity petEntity) {
+        petRepository.save(petEntity);
+    }
+
 }

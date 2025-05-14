@@ -17,7 +17,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+/*@Component
 public class VeterinarianMenu {
 
     @Autowired
@@ -56,12 +56,12 @@ public class VeterinarianMenu {
                     case 2 ->
                         mostrarHistorialPacientes();
                     case 3 ->
-                        editarHistoriaClinica();
-                    case 4 ->
-                        eliminarHistoriaClinica();
-                    case 5 ->
-                        registrarMascota(); // 👈 Nueva funcionalidad
-                    case 0 -> {
+                     //   editarHistoriaClinica();
+                    //case 4 ->
+                      //  eliminarHistoriaClinica();
+                   // case 5 ->
+                      //  registrarMascota(); // 👈 Nueva funcionalidad
+                   // case 0 -> {
                         System.out.println("🔴 Sesión cerrada.");
                         return;
                     }
@@ -131,20 +131,20 @@ public class VeterinarianMenu {
         LocalDateTime date = LocalDateTime.now();
         Boolean canceled = false;
 
-        medicalHistoryService.createMedicalHistory(
+       /* medicalHistoryService.createMedicalHistory(
                 date, veterinarian, reason, symptoms, diagnosis, procedure, medication,
                 medicationDose, idOrder, vaccinationHistory, allergies, procedureDetails, canceled, petId
         );
 
-        System.out.println("✅ Historia clínica registrada exitosamente.");
-    }
+        System.out.println("✅ Historia clínica registrada exitosamente.");*/
+   /* }
 
     private void mostrarHistorialPacientes() {
         System.out.println("\n📂 Mostrando historial de pacientes...");
 
-        List<MedicalHistoryEntity> medicalHistories = medicalHistoryService.findAll();
+      //  List<MedicalHistoryEntity> medicalHistories = medicalHistoryService.findAll();
 
-        if (medicalHistories.isEmpty()) {
+      /*  if (medicalHistories.isEmpty()) {
             System.out.println("⚠️ No hay historial de pacientes registrado.");
             return;
         }
@@ -246,11 +246,11 @@ public class VeterinarianMenu {
             return;
         }
 
-        try {
-            petService.registerPet(namepet, owner, agepet, racepet, caracteristic, weight, species);
+       /* try {
+            petService.registerPet(namepet, owner, agepet,idpet, racepet, caracteristic, weight, species);
             System.out.println("✅ Mascota registrada exitosamente.");
         } catch (Exception ex) {
-            System.out.println("⚠️ Error al registrar la mascota: " + ex.getMessage());
-        }
-    }
-}
+            System.out.println("⚠️ Error al registrar la mascota: " + ex.getMessage());*/
+        
+   /* }
+}*/

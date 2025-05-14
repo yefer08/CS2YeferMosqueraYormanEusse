@@ -10,7 +10,7 @@ import app.exception.UserNotFoundException;
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
 
-@Component
+/*@Component
 public class LoginMenu {
     private final LoginService loginService;
     private final Scanner scanner = new Scanner(System.in);
@@ -36,4 +36,4 @@ public class LoginMenu {
             }
         }
     }
-}
+}*/

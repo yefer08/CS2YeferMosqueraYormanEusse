@@ -22,7 +22,7 @@ public class OwnerMenu {
         this.petPort = petPort;
     }
 
-    public void showOwnerMenu(Long ownerId) {
+   /* public void showOwnerMenu(Long ownerId) {
         while (true) {
             System.out.println("\n--- 🐾 Menú Propietario ---");
             System.out.println("1. Ver historial clínico de mis mascotas");
@@ -49,9 +49,9 @@ public class OwnerMenu {
                 System.out.println("⚠️ Entrada inválida. Por favor, ingrese un número.");
             }
         }
-    }
+    }*/
 
-    private void verHistorialClinico(Long ownerId) {
+   /* private void verHistorialClinico(Long ownerId) {
         System.out.println("\n📖 Mostrando historial clínico de sus mascotas...");
         try {
             List<Pet> pets = petPort.findByOwnerId(ownerId);
@@ -69,7 +69,7 @@ public class OwnerMenu {
         } catch (Exception e) {
             System.out.println("❌ Error al obtener el historial clínico. Intente más tarde.");
         }
-    }
+    }*/
 
     private void mostrarInformacionMascota(Pet pet) {
         System.out.println("\n🐕 Mascota: " + pet.getNamepet() + " (ID: " + pet.getId() + ")");

@@ -7,11 +7,6 @@ package app.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-/**
- *
- * @author yefer_cordoba
- */
-
 @Getter
 @Setter
 @Entity
@@ -49,8 +44,8 @@ public class PetEntity  {
     }
 
     // Constructor con todos los argumentos
-    public PetEntity(String id, String name, String species, String breed, int age, String caracteristic, float weight, UserEntity owner) {
-        this.id = id;
+    public PetEntity( String name, String species, String breed, int age, String caracteristic, float weight, UserEntity owner) {
+     
         this.name = name;
         this.species = species;
         this.breed = breed;

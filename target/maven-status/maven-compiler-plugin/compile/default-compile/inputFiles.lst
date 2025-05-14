@@ -34,6 +34,7 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\InvalidInvoiceDataExcept
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\InvalidOrderDataException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\InvalidRoleException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\MedicalHistoryNotFoundException.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\OrderAlreadyExistsException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\OrderNotFoundException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\UserAlreadyExistsException.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\exception\UsernameAlreadyInUseException.java
@@ -56,6 +57,18 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\Orderport.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\PetPort.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\ports\Userport.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\AdminController.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\InvoiceController.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\MedicalHistoryController.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\OrderController.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\PetController.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\InvoiceRequest.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\MedicalHistoryRequest.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\OrderRequest.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\PetRequest.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\UserRequest.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Validator\InvoiceValidator.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Validator\MedicalHistoryValidator.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Validator\OrderValidator.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Validator\PetValidator.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Validator\UserValidator.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\VeterinaryApplication.java

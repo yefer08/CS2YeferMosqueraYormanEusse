@@ -5,7 +5,6 @@
 package app.infrastructure.repositories;
 
 import app.Entities.UserEntity;
-import app.domain.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
@@ -17,8 +16,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
 
     boolean existsByUsername(String username);
-
-    public void save(User user);
 
     public Optional<UserEntity> findById(long id);
 
