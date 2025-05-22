@@ -5,6 +5,9 @@
 package app.Converted;
 
 import app.Entities.MedicalHistoryEntity;
+import app.Entities.OrderEntity;
+import app.Entities.PetEntity;
+import app.Entities.UserEntity;
 import app.domain.models.MedicalHistory;
 import app.domain.models.Order;
 import app.domain.models.Veterinarian;
@@ -13,7 +16,7 @@ import app.domain.models.Veterinarian;
  *
  * @author User
  */
-public class MedicalHistoryCoverter {
+public class MedicalHistoryConverter {
     public static MedicalHistory convertToDomain(MedicalHistoryEntity entity) {
         if (entity == null) {
             return null; // Manejo de nulos
@@ -59,5 +62,29 @@ public class MedicalHistoryCoverter {
                 history.getPet() != null ? PetConverter.convertToPetEntity(history.getPet()) : null // Convertir Pet a PetEntity
         );
     }
+
+    public static MedicalHistoryEntity convertToEntity(MedicalHistory medicalHistory, PetEntity petEntity, UserEntity veterinarianEntity, OrderEntity orderEntity) {
+        if (medicalHistory == null) {
+            throw new IllegalArgumentException("⚠️ El historial médico no puede ser nulo.");
+        }
+
+        return new MedicalHistoryEntity(
+                medicalHistory.getDate(),
+                veterinarianEntity,
+                medicalHistory.getReason(),
+                medicalHistory.getSymptoms(),
+                medicalHistory.getDiagnosis(),
+                medicalHistory.getMedicalProcedure(),
+                medicalHistory.getMedication(),
+                medicalHistory.getMedicationDose(),
+                orderEntity,
+                medicalHistory.getVaccinationHistory(),
+                medicalHistory.getAllergies(),
+                medicalHistory.getProcedureDetails(),
+                medicalHistory.getCanceled(),
+                petEntity
+        );
+    }
+
 }
 

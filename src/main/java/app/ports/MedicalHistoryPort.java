@@ -4,6 +4,7 @@
  */
 package app.ports;
 
+import app.Entities.MedicalHistoryEntity;
 import app.domain.models.MedicalHistory;
 import java.util.List;
 import java.util.Optional;
@@ -12,16 +13,19 @@ import java.util.Optional;
 public interface MedicalHistoryPort {
 
     public void save(MedicalHistory history);
+    public void save(MedicalHistoryEntity historyEntity);
 
     public List<MedicalHistory> findAll();
     
     Optional<MedicalHistory> findById(String id);
 
     List<MedicalHistory> findByPetId(String petId);
+    public List<MedicalHistoryEntity> findByPetIdEntity(String petId);
 
     void deleteById(String id);
 
     public boolean existsById(String id);
+    
     
     
 }

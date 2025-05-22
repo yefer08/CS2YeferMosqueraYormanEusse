@@ -78,16 +78,9 @@ public class UserAdapter implements Userport {
         throw new RuntimeException("Error: No se encontró un dueño con ID " + id);
     }
 
-    @Override
-    public Veterinarian findVeterinarianById(long id) {
-        UserEntity userEntity = userrepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("⚠️ Veterinario con ID " + id + " no encontrado."));
-
-        if (!"veterinarian".equalsIgnoreCase(userEntity.getRole())) {
-            throw new IllegalArgumentException("⚠️ El usuario con ID " + id + " no es un veterinario.");
-        }
-
-        return UserConverter.convertToVeterinarian(userEntity);
+    public Optional<UserEntity> findVeterinarianEntityById(long id) {
+        return userrepository.findById(id)
+                .filter(user -> "veterinarian".equalsIgnoreCase(user.getRole()));
     }
 
     public UserEntity convertToUserEntity(Veterinarian veterinarian) {
@@ -140,6 +133,14 @@ public class UserAdapter implements Userport {
     public UserEntity findEntityById(long ownerId) {
         return userrepository.findById(ownerId)
                 .orElseThrow(() -> new RuntimeException("❌ Dueño no encontrado con ID: " + ownerId));
+    }
+    
+    @Override
+    public Optional<UserEntity> findVeterinarianById(long id) {
+        //System.out.println("🔍 Buscando veterinario con ID: " + id);
+        Optional<UserEntity> result = userrepository.findByIdAndRoleIgnoreCase(id, "veterinarian");
+       // System.out.println("🔍 Resultado encontrado: " + result.isPresent());
+        return result;
     }
 
 }

@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.Validator;
 
 import app.exception.InvalidDataException;
 import app.rest.request.MedicalHistoryRequest;
 
-/**
- *
- * @author User
- */
 public class MedicalHistoryValidator {
 
 
@@ -20,17 +12,20 @@ public class MedicalHistoryValidator {
         }
     }
 
+
     public static void validatePet(String pet) {
-        if (pet == null) {
+        if (pet == null || pet.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ ID de mascota no encontrado.");
         }
     }
 
+
     public static void validateOrder(String order) {
-        if (order == null) {
+        if (order == null || order.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ Orden no encontrada.");
         }
     }
+
 
     public static void validateReason(String reason) {
         if (reason == null || reason.trim().isEmpty()) {
@@ -38,33 +33,39 @@ public class MedicalHistoryValidator {
         }
     }
 
+
     public static void validateSymptoms(String symptoms) {
         if (symptoms == null || symptoms.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ Los síntomas no pueden estar vacíos.");
         }
     }
 
+
     public static void validateDiagnosis(String diagnosis) {
         if (diagnosis == null || diagnosis.trim().isEmpty()) {
-            throw new InvalidDataException("⚠️ El diagnóstico no puede estar vacío.");
+            throw new InvalidDataException("⚠️ El diagnóstico no puede estar vacío.");   
         }
     }
+
 
     public static void validateProcedure(String procedure) {
         if (procedure == null || procedure.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ El procedimiento no puede estar vacío.");
         }
     }
-    public static void validate(MedicalHistoryRequest medicalHistoryRequest){
-        
+
+
+    public static void validate(MedicalHistoryRequest medicalHistoryRequest) {
+        // Validamos cada campo
         validateVeterinarian(medicalHistoryRequest.getVeterinarian());
         validatePet(medicalHistoryRequest.getPet());
         validateReason(medicalHistoryRequest.getReason());
         validateSymptoms(medicalHistoryRequest.getSymptoms());
         validateDiagnosis(medicalHistoryRequest.getDiagnosis());
         validateProcedure(medicalHistoryRequest.getProcedureDetails());
-        //se dben validar las ordenes en caso de ser generadas?
-        
+
+        if (medicalHistoryRequest.getOrder() != null) {
+            validateOrder(medicalHistoryRequest.getOrder());
+        }
     }
-    
 }

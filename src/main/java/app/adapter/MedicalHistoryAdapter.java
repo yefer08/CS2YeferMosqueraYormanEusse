@@ -4,7 +4,7 @@
  */
 package app.adapter;
 
-import app.Converted.MedicalHistoryCoverter;
+import app.Converted.MedicalHistoryConverter;
 import app.Converted.UserConverter;
 import app.Entities.MedicalHistoryEntity;
 import app.Entities.OrderEntity;
@@ -73,11 +73,9 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
 
     @Override
     public Optional<MedicalHistory> findById(String id) {
-        Optional<MedicalHistoryEntity> optionalEntity = (Optional<MedicalHistoryEntity>) medicalHistoryRepository.findById(id);
-        return optionalEntity.map(entity -> convertToDomain(entity));
+        return medicalHistoryRepository.findById(id)
+                .map(this::convertToDomain);
     }
-
-
 
     @Override
     public List<MedicalHistory> findByPetId(String petId) {
@@ -130,7 +128,7 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
                 convertToPetEntity(order.getPet()),
                 order.getDetails(),
                 order.isCompleted(),
-                MedicalHistoryCoverter.convertToEntity(order.getMedication())
+                MedicalHistoryConverter.convertToEntity(order.getMedication())
         );
     }
 
@@ -144,7 +142,7 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
                 convertToDomainPet(entity.getPet()),
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()),
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()),
-                (MedicalHistory)MedicalHistoryCoverter.convertToDomain(entity.getMedication()),
+                (MedicalHistory)MedicalHistoryConverter.convertToDomain(entity.getMedication()),
                 entity.getDate(),
                 entity.getDetails(),
                 entity.getCompleted()
@@ -187,8 +185,19 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
 
     @Override
     public boolean existsById(String id) {
-        return medicalHistoryRepository.existsById(id); // ✅ Implementación correcta
+        return medicalHistoryRepository.existsById(id); // ✅ Ya lo tienes bien
     }
+
+    @Override
+    public void save(MedicalHistoryEntity historyEntity) {
+        medicalHistoryRepository.save(historyEntity); // 💾 Guarda el historial médico en la base de datos
+    }
+
+    @Override
+    public List<MedicalHistoryEntity> findByPetIdEntity(String petId) {
+        return medicalHistoryRepository.findByPetId(petId); // 🐶 Busca todos los historiales de una mascota por su ID
+    }
+
 
 
 }

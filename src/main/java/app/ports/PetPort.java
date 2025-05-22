@@ -7,11 +7,8 @@ package app.ports;
 import app.Entities.PetEntity;
 import app.domain.models.Pet;
 import java.util.List;
+import java.util.Optional;
 
-/**
- *
- * @author User
- */
 public interface PetPort {
 
 
@@ -22,5 +19,7 @@ public interface PetPort {
     public void save(Pet pet);
 
     public void saveEntity(PetEntity petEntity);
+    
+    Optional<PetEntity> findPetEntityById(String petId);
     
 }

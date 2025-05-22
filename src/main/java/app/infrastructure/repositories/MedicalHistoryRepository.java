@@ -5,29 +5,14 @@
 package app.infrastructure.repositories;
 
 import app.Entities.MedicalHistoryEntity;
-import app.domain.models.MedicalHistory;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
-import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface MedicalHistoryRepository extends JpaRepository<MedicalHistoryEntity, UUID> {
-
-
-
-    
+public interface MedicalHistoryRepository extends JpaRepository<MedicalHistoryEntity, String> {
     List<MedicalHistoryEntity> findByPetId(String idpet);
-
-    public Object findById(String historyId);
-
-    public boolean existsById(String historyId);
-
-    public void deleteById(String historyId);
-
-    public void save(MedicalHistory history);
 }
 

@@ -7,7 +7,7 @@ package app.ports;
 import app.Entities.UserEntity;
 import app.domain.models.Owner;
 import app.domain.models.User;
-import app.domain.models.Veterinarian;
+import java.util.Optional;
 
 public interface Userport {
 
@@ -19,7 +19,7 @@ public interface Userport {
 
     public Owner findByid(long id);
     
-    Veterinarian findVeterinarianById(long id);
+   Optional<UserEntity> findVeterinarianById(long id); 
     
     User findByUsername(String username);
 

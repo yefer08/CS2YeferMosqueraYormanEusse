@@ -13,6 +13,7 @@ app\rest\request\InvoiceRequest.class
 app\rest\request\PetRequest.class
 app\domain\services\DataInitializer.class
 app\rest\PetController.class
+app\Converted\MedicalHistoryConverter.class
 app\Validator\MedicalHistoryValidator.class
 app\Validator\PetValidator.class
 app\rest\MedicalHistoryController.class

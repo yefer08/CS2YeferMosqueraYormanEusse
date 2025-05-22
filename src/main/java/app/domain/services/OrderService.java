@@ -7,6 +7,8 @@ package app.domain.services;
 
 
 
+import app.Converted.UserConverter;
+import app.Entities.UserEntity;
 import app.domain.models.Order;
 import app.domain.models.Pet;
 import app.domain.models.Veterinarian;
@@ -35,23 +37,25 @@ public class OrderService {
             throw new InvalidOrderDataException("Error: La orden no puede ser nula.");
         }
 
-        // Buscar la mascota por ID
+        // Buscar la mascota por ID (revisar el nombre del método)
         Pet pet = petPort.findByidpet(order.getPet().getId());
         if (pet == null) {
             throw new InvalidOrderDataException("Error: La mascota asociada no puede ser nula.");
         }
 
         // Asignar el dueño de la mascota a la orden
-        order.setOwner(pet.getIdOwnwer());  // Corregido getIdOwner()
+        order.setOwner(pet.getIdOwnwer());
 
         // Buscar veterinario por ID
-        Veterinarian veterinarian = userport.findVeterinarianById(order.getVeterinarian().getId());
-        if (veterinarian == null) {
-            throw new InvalidOrderDataException("Error: El veterinario no puede ser nulo.");
-        }
+        UserEntity userEntity = userport.findVeterinarianById(order.getVeterinarian().getId())
+                .orElseThrow(() -> new InvalidOrderDataException("Error: El veterinario no puede ser nulo."));
+
+        Veterinarian veterinarian = UserConverter.convertToVeterinarian(userEntity);
+
 
         // Guardar la orden
         orderport.save(order);
     }
+
 }
 

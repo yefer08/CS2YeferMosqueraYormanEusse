@@ -20,7 +20,7 @@ public class OrderRequest {
     public OrderRequest(LocalDateTime date, Long ownerId, 
             Long veterinarianId, String petId, String details, Boolean completed, String medicalHistoryId) {
      
-        this.date = date;
+        this.date =  LocalDateTime.now();
         this.ownerId = ownerId;
         this.veterinarianId = veterinarianId;
         this.petId = petId;

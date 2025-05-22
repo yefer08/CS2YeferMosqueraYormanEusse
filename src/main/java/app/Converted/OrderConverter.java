@@ -5,8 +5,8 @@
 package app.Converted;
 
 import static app.Converted.PetConverter.convertToDomainPet;
-import static app.Converted.MedicalHistoryCoverter.convertToDomain;
-import static app.Converted.MedicalHistoryCoverter.convertToEntity;
+import static app.Converted.MedicalHistoryConverter.convertToDomain;
+import static app.Converted.MedicalHistoryConverter.convertToEntity;
 import static app.Converted.PetConverter.convertToPetEntity;
 import app.Entities.OrderEntity;
 import app.domain.models.Order;

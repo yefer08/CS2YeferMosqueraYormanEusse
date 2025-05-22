@@ -4,7 +4,7 @@
  */
 package app.adapter;
 
-import app.Converted.MedicalHistoryCoverter;
+import app.Converted.MedicalHistoryConverter;
 import app.Converted.UserConverter;
 import app.Entities.OrderEntity;
 import app.Entities.PetEntity;
@@ -49,7 +49,7 @@ public class OrderAdapter implements Orderport {
                 convertToPetEntity(order.getPet()), // Convertir Pet a PetEntity
                 order.getDetails(), // Detalles
                 order.isCompleted(),
-                MedicalHistoryCoverter.convertToEntity(order.getMedication())// Estado completado
+                MedicalHistoryConverter.convertToEntity(order.getMedication())// Estado completado
         );
     }
 
@@ -71,7 +71,7 @@ public class OrderAdapter implements Orderport {
                 convertToDomainPet(entity.getPet()), // Convertir PetEntity a Pet
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()), // Convertir UserEntity a Owner
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()), // Convertir UserEntity a Veterinarian
-                (MedicalHistory)MedicalHistoryCoverter.convertToDomain(entity.getMedication()), // Medicación asociada
+                (MedicalHistory)MedicalHistoryConverter.convertToDomain(entity.getMedication()), // Medicación asociada
                 entity.getDate(), // Fecha de la orden
                 entity.getDetails(), // Detalles
                 entity.getCompleted() // Estado completado
@@ -112,5 +112,10 @@ public class OrderAdapter implements Orderport {
                 petEntity.getWeight(), // Peso
                 petEntity.getSpecies() // Especie
         );
+    }
+
+    @Override
+    public Optional<OrderEntity> findOrderEntityById(String id) {
+        return orderServiceRepository.findById(id);
     }
 }

@@ -26,7 +26,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String name;
     
-     private int age;
+    private int age;
     
     @Column(nullable = false, unique = true)
     private String username;

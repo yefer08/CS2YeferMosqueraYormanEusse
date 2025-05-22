@@ -5,6 +5,8 @@
 
 package app.rest;
 
+import app.Converted.UserConverter;
+import app.Entities.UserEntity;
 import app.Validator.OrderValidator;
 import app.domain.models.MedicalHistory;
 import app.domain.models.Order;
@@ -44,12 +46,24 @@ public class OrderController {
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
         try {
             OrderValidator.validate(request);
+
             Pet pet = petport.findByidpet(request.getPetId());
+            if (pet == null) {
+                throw new RuntimeException("⚠️ Mascota no encontrada con ID: " + request.getPetId());
+            }
+
             Owner owner = userport.findByid(request.getOwnerId());
-            Veterinarian veterinarian = userport.findVeterinarianById(request.getVeterinarianId());
+            if (owner == null) {
+                throw new RuntimeException("⚠️ Dueño no encontrado con ID: " + request.getOwnerId());
+            }
+
+            UserEntity veterinarianEntity = userport.findVeterinarianById(request.getVeterinarianId())
+                    .orElseThrow(() -> new RuntimeException("⚠️ Veterinario no encontrado con ID: " + request.getVeterinarianId()));
+
+            Veterinarian veterinarian = UserConverter.convertToVeterinarian(veterinarianEntity);
+
             MedicalHistory medicalHistory = medicalHistoryport.findById(request.getMedicalHistoryId())
                     .orElseThrow(() -> new RuntimeException("❌ Historial médico no encontrado con ID: " + request.getMedicalHistoryId()));
-
 
             Order order = new Order(
                     pet,
@@ -72,4 +86,5 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("❌ Error inesperado: " + e.getMessage());
         }
     }
+
 }

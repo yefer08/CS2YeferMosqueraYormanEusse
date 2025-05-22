@@ -7,10 +7,12 @@ package app.Entities;
 import app.domain.models.Order;
 import app.domain.models.Pet;
 import app.domain.models.Veterinarian;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -45,7 +47,8 @@ public class MedicalHistoryEntity {
     private String procedureDetails;
     private Boolean canceled;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST) // Permite guardar automáticamente la mascota asociada
+    @JoinColumn(name = "pet_id", nullable = false)
     private PetEntity pet;
 
     public MedicalHistoryEntity() {}
