@@ -42,36 +42,38 @@ public class MedicalHistoryController {
     @PostMapping("/crear-historiaclinica")
     public ResponseEntity<String> createMedicalHistory(@RequestBody MedicalHistoryRequest request) {
         try {
-            //System.out.println("🧪 BODY RECIBIDO: " + request);
-           // System.out.println("🧪 Veterinario: " + request.getVeterinarian());
+            System.out.println("🧪 BODY RECIBIDO: " + request);
+            System.out.println("🧪 Veterinario: " + request.getVeterinarian());
             MedicalHistoryValidator.validate(request);
-           // System.out.println("✅ Validación inicial completada.");
+            System.out.println("✅ Validación inicial completada.");
             
-            //Optional<UserEntity> userEntityOpt = userport.findVeterinarianById(request.getVeterinarian());
-            //System.out.println("🔍 Veterinario encontrado: " + userEntityOpt.isPresent());
+            Optional<UserEntity> userEntityOpt = userport.findVeterinarianById(request.getVeterinarian());
+            System.out.println("🔍 Veterinario encontrado: " + userEntityOpt.isPresent());
 
             UserEntity userEntity = userport.findVeterinarianById(request.getVeterinarian())
                     .orElseThrow(() -> new InvalidDataException("⚠️ Veterinario no encontrado con ID: " + request.getVeterinarian()));
             
-            //System.out.println("🔍 Veterinario UserEntity: " + userEntity.getName());
+            if (!"veterinarian".equalsIgnoreCase(userEntity.getRole())) {
+                throw new InvalidDataException("⚠️ El usuario no tiene rol de veterinario.");
+            }
+            
+            System.out.println("🔍 Veterinario UserEntity: " + userEntity.getName());
 
             Veterinarian veterinarian = UserConverter.convertToVeterinarian(userEntity);
             
-            // System.out.println("✅ Veterinario convertido: " + veterinarian.getName());
+             System.out.println("✅ Veterinario convertido: " + veterinarian.getName());
 
             Order order = null;
-            if (request.getOrder() != null && !request.getOrder().isEmpty()) {
-                order = orderport.findByorderId(request.getOrder());
-                if (order == null) {
-                    throw new InvalidDataException("⚠️ Orden no encontrada.");
-                }
-                //System.out.println("✅ Orden encontrada: " + order.getId());
+            if (request.getOrder() != null && !request.getOrder().isBlank()) {
+                order = orderport.findById(request.getOrder())
+                        .orElseThrow(() -> new InvalidDataException("⚠️ Orden no encontrada."));
+                System.out.println("✅ Orden encontrada: " + order.getId());
             }
             
 
             Pet pet = petport.findByidpet(request.getPet());
             
-            //System.out.println("✅ Mascota encontrada: " + pet.getId());
+            System.out.println("✅ Mascota encontrada: " + pet.getId());
 
             MedicalHistory medicalHistory = new MedicalHistory(
                     request.getDate(),

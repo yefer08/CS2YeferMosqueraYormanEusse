@@ -5,25 +5,10 @@
 package app.domain.models;
 
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
 
-/**
- *
- * @author yefer_cordoba
- */
-
-@Setter
-@Getter
 
 public class Invoices {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID) 
     private String idInvoice;
     private Pet pet;
     private Owner owner;
@@ -33,8 +18,8 @@ public class Invoices {
     private int quantity;
     private LocalDateTime date;
 
-    public Invoices(String idInvoice, Pet pet, Owner owner, Order order, String productName, float value, int quantity, LocalDateTime date) {
-        this.idInvoice = idInvoice;
+    public Invoices( Pet pet, Owner owner, Order order, String productName, float value, int quantity, LocalDateTime date) {
+     
         this.pet = pet;
         this.owner = owner;
         this.order = order;
@@ -43,6 +28,72 @@ public class Invoices {
         this.quantity = quantity;
         this.date = date;
     }
+
+    public String getIdInvoice() {
+        return idInvoice;
+    }
+
+    public void setIdInvoice(String idInvoice) {
+        this.idInvoice = idInvoice;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+    
+    
 
     
 }

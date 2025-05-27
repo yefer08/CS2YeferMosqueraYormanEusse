@@ -21,5 +21,7 @@ public interface PetPort {
     public void saveEntity(PetEntity petEntity);
     
     Optional<PetEntity> findPetEntityById(String petId);
+
+    public boolean existsById(String id);
     
 }

@@ -47,6 +47,128 @@ public class MedicalHistoryRequest {
         this.canceled = canceled;
         this.pet = pet;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Long getVeterinarian() {
+        return veterinarian;
+    }
+
+    public void setVeterinarian(Long veterinarian) {
+        this.veterinarian = veterinarian;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getSymptoms() {
+        return symptoms;
+    }
+
+    public void setSymptoms(String symptoms) {
+        this.symptoms = symptoms;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getMedicalProcedure() {
+        return medicalProcedure;
+    }
+
+    public void setMedicalProcedure(String medicalProcedure) {
+        this.medicalProcedure = medicalProcedure;
+    }
+
+    public String getMedication() {
+        return medication;
+    }
+
+    public void setMedication(String medication) {
+        this.medication = medication;
+    }
+
+    public String getMedicationDose() {
+        return medicationDose;
+    }
+
+    public void setMedicationDose(String medicationDose) {
+        this.medicationDose = medicationDose;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getVaccinationHistory() {
+        return vaccinationHistory;
+    }
+
+    public void setVaccinationHistory(String vaccinationHistory) {
+        this.vaccinationHistory = vaccinationHistory;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getProcedureDetails() {
+        return procedureDetails;
+    }
+
+    public void setProcedureDetails(String procedureDetails) {
+        this.procedureDetails = procedureDetails;
+    }
+
+    public Boolean getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(Boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    public String getPet() {
+        return pet;
+    }
+
+    public void setPet(String pet) {
+        this.pet = pet;
+    }
+    
+    
     
     
 }

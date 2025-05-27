@@ -22,7 +22,7 @@ import java.util.UUID;
 @Component
 public class AdminMenu {
 
-    private final Scanner scanner = new Scanner(System.in);
+   /* private final Scanner scanner = new Scanner(System.in);
     private final AdminService adminService; // Cambio consistente en el nombre
     private final Userport userPort;
 
@@ -96,5 +96,5 @@ public class AdminMenu {
         } catch (Exception e) {
             System.out.println("❌ Error inesperado: " + e.getMessage());
         }
-    }
+    }*/
 }

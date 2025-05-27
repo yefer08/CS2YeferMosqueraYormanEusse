@@ -24,5 +24,11 @@ public interface Userport {
     User findByUsername(String username);
 
     public UserEntity findEntityById(long ownerId);
+
+    Optional<UserEntity> findOwnerById(Long id);
+
+    public boolean existsById(Long id);
+
+ 
 }
 

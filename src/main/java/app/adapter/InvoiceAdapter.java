@@ -43,7 +43,7 @@ public class InvoiceAdapter implements InvoicePort {
 
     private Invoices convertToDomain(InvoiceEntity entity) {
         return  new Invoices(
-            entity.getIdInvoice(),
+         
             (Pet)PetConverter.convertToDomainPet(entity.getPet()),
             (Owner)UserConverter.convertToDomainUser(entity.getOwner()),
             (Order)OrderConverter.convertToOrder(entity.getOrder()),

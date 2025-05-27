@@ -5,7 +5,9 @@
 package app.adapter;
 
 import app.Converted.MedicalHistoryConverter;
+import app.Converted.MedicationOrderItemConverter;
 import app.Converted.UserConverter;
+import app.Entities.MedicalHistoryEntity;
 import app.Entities.OrderEntity;
 import app.Entities.PetEntity;
 import app.domain.models.MedicalHistory;
@@ -14,12 +16,15 @@ import app.domain.models.Owner;
 import app.domain.models.Pet;
 import app.domain.models.Veterinarian;
 import app.infrastructure.repositories.OrderServiceRepository;
+import app.infrastructure.repositories.PetRepository;
 import app.ports.Orderport;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 
@@ -28,32 +33,42 @@ public class OrderAdapter implements Orderport {
 
     @Autowired
     private OrderServiceRepository orderServiceRepository;
+    @Autowired
+    private PetRepository petRepository; // Inyecta el repo para acceder a la BD
+    
 
     @Override
-    public void save(Order order) {
+    public Order save(Order order) {
         OrderEntity orderEntity = convertToEntity(order);
-        orderServiceRepository.save(orderEntity);
+        OrderEntity savedEntity = orderServiceRepository.save(orderEntity); // aquí obtienes el ID generado, etc.
+        return convertToDomain(savedEntity); // y lo devuelves como modelo de dominio
     }
+
 
     // Convierte un Order a OrderEntity (objeto de dominio a persistente)
     private OrderEntity convertToEntity(Order order) {
         if (order == null) {
-            return null; 
+            return null;
+        }
+
+        MedicalHistoryEntity medicalHistoryEntity = null;
+
+        if (order.getMedicalHistory() != null && order.getMedicalHistory().getId() != null) {
+            medicalHistoryEntity = MedicalHistoryConverter.convertToEntity(order.getMedicalHistory());
         }
 
         return new OrderEntity(
-                order.getId(),
                 order.getDate(), // Fecha de la orden
-                UserConverter.convertToUserEntity(order.getOwner()), // Convertir Owner a UserEnity
+                UserConverter.convertToUserEntity(order.getOwner()), // Convertir Owner a UserEntity
                 UserConverter.convertToUserEntity(order.getVeterinarian()), // Convertir Veterinarian a UserEntity
                 convertToPetEntity(order.getPet()), // Convertir Pet a PetEntity
-                order.getDetails(), // Detalles
+                order.getDescription(), // Detalles
                 order.isCompleted(),
-                MedicalHistoryConverter.convertToEntity(order.getMedication())// Estado completado
+                medicalHistoryEntity // Ahora puede ser null sin romper nada
         );
     }
 
-    @Override
+
     public Order findByorderId(String idOrder) {
         Optional<OrderEntity> orderEntityOptional = orderServiceRepository.findById(idOrder);
         return orderEntityOptional.map(this::convertToDomain)
@@ -66,35 +81,50 @@ public class OrderAdapter implements Orderport {
             return null; // Manejo de nulos
         }
 
+        MedicalHistory medicalHistory = null;
+        if (entity.getMedicalHistory() != null) {
+            medicalHistory = MedicalHistoryConverter.convertToDomain(entity.getMedicalHistory());
+        }
+
         return new Order(
-             
                 convertToDomainPet(entity.getPet()), // Convertir PetEntity a Pet
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()), // Convertir UserEntity a Owner
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()), // Convertir UserEntity a Veterinarian
-                (MedicalHistory)MedicalHistoryConverter.convertToDomain(entity.getMedication()), // Medicación asociada
+                medicalHistory, // Historia clínica (ahora protegida)
+                MedicationOrderItemConverter.convertToDomainList(entity.getMedicationItems()),
                 entity.getDate(), // Fecha de la orden
-                entity.getDetails(), // Detalles
+                entity.getDescription(), // Detalles
                 entity.getCompleted() // Estado completado
         );
     }
 
+
     // Convierte un Pet a PetEntity (objeto de dominio a persistente)
     private PetEntity convertToPetEntity(Pet pet) {
         if (pet == null) {
-            return null; // Manejo de nulos
+            return null;
         }
 
+        if (pet.getId()!= null) {
+            // Intentamos buscar la mascota existente
+            Optional<PetEntity> petEntityOptional = petRepository.findById(pet.getId());
+            if (petEntityOptional.isPresent()) {
+                return petEntityOptional.get();
+            }
+        }
+
+        // Si no existe en BD o no tiene ID, creamos nueva entidad con datos del dominio
         return new PetEntity(
-               
-                pet.getNamepet(), // Nombre de la mascota
+                pet.getNamepet(), // Nombre
                 pet.getSpecies(), // Especie
                 pet.getRacepet(), // Raza
                 pet.getAgepet(), // Edad
-                pet.getCaracteristic(), // Características adicionales
+                pet.getCaracteristic(), // Características
                 pet.getWeight(), // Peso
-                UserConverter.convertToUserEntity(pet.getIdOwnwer()) // Convertir Owner a UserEntity
+                UserConverter.convertToUserEntity(pet.getIdOwnwer()) // Dueño convertido a entidad
         );
     }
+
 
     // Convierte un PetEntity a Pet (persistente a dominio)
     private Pet convertToDomainPet(PetEntity petEntity) {
@@ -113,9 +143,19 @@ public class OrderAdapter implements Orderport {
                 petEntity.getSpecies() // Especie
         );
     }
+   
 
     @Override
-    public Optional<OrderEntity> findOrderEntityById(String id) {
-        return orderServiceRepository.findById(id);
+    public Optional<Order> findById(String id) {
+        return orderServiceRepository.findById(id)
+                .map(this::convertToDomain); // convertir entidad a modelo de dominio
     }
+
+    @Override
+    public List<Order> findAll() {
+        return orderServiceRepository.findAll().stream()
+                .map(this::convertToDomain)
+                .collect(Collectors.toList());
+    }
+
 }

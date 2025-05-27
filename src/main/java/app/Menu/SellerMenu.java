@@ -19,7 +19,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+/*@Component
 public class SellerMenu {
   
 
@@ -159,5 +159,5 @@ public class SellerMenu {
         }
     }
 
-}
+}*/
 

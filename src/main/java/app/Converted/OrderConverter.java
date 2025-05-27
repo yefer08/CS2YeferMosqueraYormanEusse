@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package app.Converted;
 
 import static app.Converted.PetConverter.convertToDomainPet;
@@ -13,26 +10,25 @@ import app.domain.models.Order;
 import app.domain.models.Owner;
 import app.domain.models.Veterinarian;
 
-/**
- *
- * @author User
- */
+
 public class OrderConverter {
+    
     public static Order convertToOrder(OrderEntity entity) {
         if (entity == null) {
             throw new IllegalArgumentException("⚠️ La entidad OrderEntity no puede ser nula.");
         }
 
         return new Order(
-               
-                convertToDomainPet(entity.getPet()), // Convertir PetEntity a Pet
-                (Owner) UserConverter.convertToDomainUser(entity.getOwner()), // Convertir UserEntity a Owner
-                (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()), // Convertir UserEntity a Veterinarian
-                convertToDomain(entity.getMedication()), // Medicamento asociado
-                entity.getDate(), // Fecha de la orden
-                entity.getDetails(), // Detalles de la orden
-                entity.getCompleted() // Estado completado
+                convertToDomainPet(entity.getPet()),
+                (Owner) UserConverter.convertToDomainUser(entity.getOwner()),
+                (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()),
+                convertToDomain(entity.getMedicalHistory()),
+                MedicationOrderItemConverter.convertToDomainList(entity.getMedicationItems()), // ✔️
+                entity.getDate(),
+                entity.getDescription(),
+                entity.getCompleted()
         );
+
     }
     
     public static OrderEntity convertToOrderEntity(Order order) {
@@ -40,18 +36,26 @@ public class OrderConverter {
             throw new IllegalArgumentException("⚠️ La orden no puede ser nula.");
         }
 
-        return new OrderEntity(
-                order.getId(),
-                order.getDate(), // Fecha de la orden
-                UserConverter.convertToUserEntity(order.getOwner()), // Convertir Owner a UserEntity
-                UserConverter.convertToUserEntity(order.getVeterinarian()), // Convertir Veterinarian a UserEntity
-                convertToPetEntity(order.getPet()), // Convertir Pet a PetEntity
-                order.getDetails(), 
+        // 🧱 Primero creas el objeto
+        OrderEntity orderEntity = new OrderEntity(
+                order.getDate(),
+                UserConverter.convertToUserEntity(order.getOwner()),
+                UserConverter.convertToUserEntity(order.getVeterinarian()),
+                convertToPetEntity(order.getPet()),
+                order.getDescription(),
                 order.isCompleted(),
-                convertToEntity(order.getMedication())
+                convertToEntity(order.getMedicalHistory())
         );
+
+        // 🧪 Luego le seteas los ítems de medicación
+        orderEntity.setMedicationItems(
+                MedicationOrderItemConverter.convertToEntityList(order.getMedicationItems())
+        );
+
+        // 🏁 Finalmente lo devuelves
+        return orderEntity;
     }
-    
+
 
    
 }

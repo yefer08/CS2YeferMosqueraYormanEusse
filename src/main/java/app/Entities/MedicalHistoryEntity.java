@@ -4,10 +4,8 @@
  */
 package app.Entities;
 
-import app.domain.models.Order;
-import app.domain.models.Pet;
-import app.domain.models.Veterinarian;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,10 +29,13 @@ public class MedicalHistoryEntity {
     
     @ManyToOne
     private UserEntity veterinarian;
-    
+    @Column(nullable = false)
     private String reason;
+    @Column(nullable = false)
     private String symptoms;
+    @Column(nullable = false)
     private String diagnosis;
+    @Column(nullable = false)
     private String medicalProcedure;
     private String medication;
     private String medicationDose;

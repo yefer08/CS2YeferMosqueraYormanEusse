@@ -6,19 +6,15 @@ package app.ports;
 
 import app.Entities.OrderEntity;
 import app.domain.models.Order;
+import java.util.List;
 import java.util.Optional;
 
-/**
- *
- * @author User
- */
+
 public interface Orderport {
 
-    public void save(Order order);
+    Order save(Order order);
 
-    public Order findByorderId(String idOrder);
+    Optional<Order> findById(String id);
 
-    Optional<OrderEntity> findOrderEntityById(String id);
-   
-    
+    List<Order> findAll();
 }

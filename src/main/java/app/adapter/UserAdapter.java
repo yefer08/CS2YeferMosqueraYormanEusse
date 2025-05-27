@@ -32,24 +32,25 @@ public class UserAdapter implements Userport {
     }
 
     private UserEntity convertToEntity(User user) {
-        return new UserEntity(
-               
-                user.getAge(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getRole(),
-                user.getName()
-        );
+        UserEntity entity = new UserEntity();
+        entity.setId(user.getId());  // 👈 Este es el que faltaba o estaba mal seteado
+        entity.setAge(user.getAge());
+        entity.setUsername(user.getUsername());
+        entity.setPassword(user.getPassword());
+        entity.setRole(user.getRole());
+        entity.setName(user.getName());
+        return entity;
+    
     }
 
     private User convertToDomain(UserEntity entity) {
         switch (entity.getRole().toLowerCase()) {
             case "veterinarian":
-                return new Veterinarian( entity.getName(), entity.getAge(), entity.getUsername(), entity.getPassword(), entity.getRole());
+                return new Veterinarian(entity.getId(),entity.getName(), entity.getAge(), entity.getUsername(), entity.getPassword(), entity.getRole());
             case "owner":
-                return new Owner(entity.getName(), entity.getAge(), entity.getUsername(), entity.getPassword(), entity.getRole());
+                return new Owner(entity.getId(),entity.getName(), entity.getAge(), entity.getUsername(), entity.getPassword(), entity.getRole());
             case "seller":
-                return new Seller( entity.getName(), entity.getAge(), entity.getUsername(), entity.getPassword(), entity.getRole());
+                return new Seller(entity.getId(), entity.getName(), entity.getAge(), entity.getUsername(), entity.getPassword(), entity.getRole());
             default:
                 throw new IllegalArgumentException("Rol no reconocido: " + entity.getRole());
         }
@@ -65,7 +66,7 @@ public class UserAdapter implements Userport {
 
             if ("owner".equalsIgnoreCase(userEntity.getRole())) {
                 return new Owner(
-                        
+                        userEntity.getId(),
                         userEntity.getName(),
                         userEntity.getAge(),
                         userEntity.getUsername(),
@@ -98,7 +99,7 @@ public class UserAdapter implements Userport {
 
     public UserEntity convertToUserEntity(Owner owner) {
         return new UserEntity(
-              
+                owner.getId(),
                 owner.getAge(),
                 owner.getUsername(),
                 owner.getPassword(),
@@ -109,7 +110,7 @@ public class UserAdapter implements Userport {
 
     public UserEntity convertToUserEntity(Seller seller) {
         return new UserEntity(
-                
+                seller.getId(),
                 seller.getAge(),
                 seller.getUsername(),
                 seller.getPassword(),
@@ -141,6 +142,19 @@ public class UserAdapter implements Userport {
         Optional<UserEntity> result = userrepository.findByIdAndRoleIgnoreCase(id, "veterinarian");
        // System.out.println("🔍 Resultado encontrado: " + result.isPresent());
         return result;
+    }
+
+    @Override
+    public Optional<UserEntity> findOwnerById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("⚠️ El ID del dueño no puede ser nulo.");
+        }
+
+        return userrepository.findByIdAndRoleIgnoreCase(id, "OWNER");
+    }
+    @Override
+    public boolean existsById(Long id) {
+        return userrepository.existsById(id);
     }
 
 }

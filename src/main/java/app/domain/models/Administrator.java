@@ -21,10 +21,16 @@ public class Administrator extends User {
     public Administrator() {
     }
 
-    public Administrator( String name, int age, String username, String password, String role) {
-        super( name, age, username, password, role);
+    public Administrator(long id, String name, int age, String username, String password, String role) {
+        super(id, name, age, username, password, role);
+    }
+    
+    public Administrator(String name, int age, String username, String password, String role) {
+        super(null, name, age, username, password, role); // id null, será autogenerado
     }
 
+ 
+    
     
 }
 

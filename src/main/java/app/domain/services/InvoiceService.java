@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.ports.Userport;
 import app.ports.InvoicePort;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -60,12 +61,17 @@ public class InvoiceService {
         }
 
         // 🔹 Validar orden médica SOLO si es medicamento
-        if (invoice.getOrder() != null) {  // <- Aquí se corrigió la validación
-            Order order = orderPort.findByorderId(invoice.getOrder().getId());
-            if (order == null) {
+        if (invoice.getOrder() != null && invoice.getOrder().getId() != null) {
+            Optional<Order> order = orderPort.findById(invoice.getOrder().getId());
+
+            if (order.isEmpty()) {
                 throw new InvalidInvoiceDataException("❌ Error: La orden médica no existe.");
             }
+
+            // Opcional: podrías setear la orden completa si la necesitas luego
+            invoice.setOrder(order.get());
         }
+
 
         // 🔹 Guardar la factura
         invoicePort.save(invoice);

@@ -26,7 +26,7 @@ public class UserConverter {
         switch (userEntity.getRole().toLowerCase()) {
             case "veterinarian":
                 return new Veterinarian(
-                        
+                        userEntity.getId(),
                         userEntity.getName(),
                         userEntity.getAge(),
                         userEntity.getUsername(),
@@ -35,7 +35,7 @@ public class UserConverter {
                 );
             case "owner":
                 return new Owner(
-                        
+                        userEntity.getId(),
                         userEntity.getName(),
                         userEntity.getAge(),
                         userEntity.getUsername(),
@@ -44,7 +44,7 @@ public class UserConverter {
                 );
             case "seller":
                 return new Seller(
-                        
+                        userEntity.getId(),
                         userEntity.getName(),
                         userEntity.getAge(),
                         userEntity.getUsername(),
@@ -54,7 +54,7 @@ public class UserConverter {
                 
             case "admin":
                 return new Administrator( 
-                        
+                        userEntity.getId(),
                         userEntity.getName(),
                         userEntity.getAge(),
                         userEntity.getUsername(),
@@ -74,7 +74,7 @@ public class UserConverter {
         }
 
         return new UserEntity(
-                
+                owner.getId(),
                 owner.getAge(),
                 owner.getUsername(),
                 owner.getPassword(),
@@ -90,7 +90,7 @@ public class UserConverter {
         }
 
         return new UserEntity(
-                
+                veterinarian.getId(),
                 veterinarian.getAge(),
                 veterinarian.getUsername(),
                 veterinarian.getPassword(),
@@ -106,7 +106,7 @@ public class UserConverter {
         }
 
         return new UserEntity(
-               
+                seller.getId(),
                 seller.getAge(),
                 seller.getUsername(),
                 seller.getPassword(),
@@ -124,7 +124,7 @@ public class UserConverter {
         }
 
         return new Veterinarian(
-              
+                userEntity.getId(),
                 userEntity.getName(),
                 userEntity.getAge(),
                 userEntity.getUsername(),

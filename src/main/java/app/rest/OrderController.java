@@ -5,10 +5,12 @@
 
 package app.rest;
 
+import app.Converted.MedicationOrderItemRequestConverter;
 import app.Converted.UserConverter;
 import app.Entities.UserEntity;
 import app.Validator.OrderValidator;
 import app.domain.models.MedicalHistory;
+import app.domain.models.MedicationOrderItem;
 import app.domain.models.Order;
 import app.domain.models.Owner;
 import app.domain.models.Pet;
@@ -20,6 +22,7 @@ import app.ports.MedicalHistoryPort;
 import app.ports.PetPort;
 import app.ports.Userport;
 import app.rest.request.OrderRequest;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,12 +67,16 @@ public class OrderController {
 
             MedicalHistory medicalHistory = medicalHistoryport.findById(request.getMedicalHistoryId())
                     .orElseThrow(() -> new RuntimeException("❌ Historial médico no encontrado con ID: " + request.getMedicalHistoryId()));
+            
+            List<MedicationOrderItem> medicationItems = MedicationOrderItemRequestConverter.convertToDomainList(request.getMedicationItems());
+
 
             Order order = new Order(
                     pet,
                     owner,
                     veterinarian,
                     medicalHistory,
+                    medicationItems, 
                     request.getDate(),
                     request.getDetails(),
                     request.getCompleted()

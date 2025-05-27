@@ -11,53 +11,26 @@ import app.rest.request.InvoiceRequest;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
 public class InvoiceValidator {
 
-    @Autowired
-    private static PetPort petPort;
+    private final PetPort petPort;
+    private final Userport userPort;
+    private final Orderport orderPort;
 
-    @Autowired
-    private static Userport userPort;
-
-    @Autowired
-    private static Orderport orderPort;
-
-    public static void validateId(String id) {
-        if (id == null || id.isBlank()) {
-            throw new InvalidInvoiceDataException("⚠ El ID de la factura no puede estar vacío.");
-        }
+    // 🔹 Inyección por constructor (Spring lo hace automáticamente)
+    public InvoiceValidator(PetPort petPort, Userport userPort, Orderport orderPort) {
+        this.petPort = petPort;
+        this.userPort = userPort;
+        this.orderPort = orderPort;
     }
 
-    public static void validateDate(LocalDate date) {
-        if (date == null) {
-            throw new InvalidInvoiceDataException("⚠ La fecha no puede estar vacía.");
-        }
-    }
+    // 🔹 Métodos ya no son estáticos, ahora pertenecen a la instancia
+    public void validate(InvoiceRequest invoiceRequest) {
 
-    public static void validateOwner(Long owner) {
-        if (owner == null) {
-            throw new InvalidInvoiceDataException("⚠ El dueño no puede estar vacío.");
-        }
-    }
-
-    public static void validatePet(String pet) {
-        if (pet == null) {
-            throw new InvalidInvoiceDataException("⚠ La mascota no puede estar vacía.");
-        }
-    }
-
-    public static void validateOrder(String order) {
-        if (order == null) {
-            throw new InvalidInvoiceDataException("⚠ La orden médica no puede estar vacía.");
-        }
-    }
-
-    public static void validate(InvoiceRequest invoiceRequest) {
-        validateId(invoiceRequest.getIdInvoice());
         validateDate(invoiceRequest.getDate().toLocalDate());
         validateOwner(invoiceRequest.getOwner());
         validatePet(invoiceRequest.getPet());
@@ -87,11 +60,36 @@ public class InvoiceValidator {
         }
 
         // 🔹 Validar orden médica SOLO si es medicamento
-        if (invoiceRequest.getOrder() != null) {
-            Order order = orderPort.findByorderId(invoiceRequest.getOrder());
-            if (order == null) {
+        if (invoiceRequest.getOrder() != null && !invoiceRequest.getOrder().isEmpty()) {
+            Optional<Order> optionalOrder = orderPort.findById(invoiceRequest.getOrder());
+            if (optionalOrder.isEmpty()) {
                 throw new InvalidInvoiceDataException("❌ Error: La orden médica no existe.");
             }
+        }
+    }
+
+    // 🔹 Métodos auxiliares no son estáticos
+    private void validateDate(LocalDate date) {
+        if (date == null) {
+            throw new InvalidInvoiceDataException("⚠ La fecha no puede estar vacía.");
+        }
+    }
+
+    private void validateOwner(Long owner) {
+        if (owner == null) {
+            throw new InvalidInvoiceDataException("⚠ El dueño no puede estar vacío.");
+        }
+    }
+
+    private void validatePet(String pet) {
+        if (pet == null) {
+            throw new InvalidInvoiceDataException("⚠ La mascota no puede estar vacía.");
+        }
+    }
+
+    private void validateOrder(String order) {
+        if (order == null) {
+            throw new InvalidInvoiceDataException("⚠ La orden médica no puede estar vacía.");
         }
     }
 }

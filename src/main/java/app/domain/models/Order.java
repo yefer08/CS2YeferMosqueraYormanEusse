@@ -1,38 +1,113 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package app.domain.models;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
-@Setter
-@Getter
+import java.util.List; 
+import lombok.NoArgsConstructor; 
+import lombok.AllArgsConstructor; 
+
+
+@NoArgsConstructor 
+@AllArgsConstructor 
 public class Order {
-    private String id;  
+    private String id; 
     private Pet pet;
     private Owner owner;
     private Veterinarian veterinarian; 
-    private MedicalHistory medication;
-    private LocalDateTime date;
-    private String details;
-    private boolean completed;
+    private MedicalHistory medicalHistory;
+    private List<MedicationOrderItem> medicationItems;
 
-    public Order( Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medication, LocalDateTime date, String details,Boolean completed) {
-      
+    private LocalDateTime date;
+    private String description; 
+    private boolean completed;
+    
+    public Order(Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medicalHistory, List<MedicationOrderItem> medicationItems, LocalDateTime date, String description, Boolean completed) {
         this.pet = pet;
         this.owner = owner;
         this.veterinarian = veterinarian;
-        this.medication = medication;
+        this.medicalHistory = medicalHistory;
+        this.medicationItems = medicationItems;
         this.date = date;
-        this.details = details;
+        this.description = description;
         this.completed = completed;
-    }    
+    }
 
+    public Order(String orderId) {
+        this.id = orderId; 
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Veterinarian getVeterinarian() {
+        return veterinarian;
+    }
+
+    public void setVeterinarian(Veterinarian veterinarian) {
+        this.veterinarian = veterinarian;
+    }
+
+    public MedicalHistory getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(MedicalHistory medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
+
+    public List<MedicationOrderItem> getMedicationItems() {
+        return medicationItems;
+    }
+
+    public void setMedicationItems(List<MedicationOrderItem> medicationItems) {
+        this.medicationItems = medicationItems;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+    
     
 }
-
-    
-

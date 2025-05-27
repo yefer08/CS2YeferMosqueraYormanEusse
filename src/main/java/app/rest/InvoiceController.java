@@ -31,26 +31,35 @@ public class InvoiceController {
 
     @Autowired
     private InvoiceService invoiceService;
-    
+
     @Autowired
     private PetPort petPort;
+
     @Autowired
     private Userport userPort;
 
     @Autowired
     private Orderport orderPort;
 
+    @Autowired
+    private InvoiceValidator invoiceValidator; // ✅ Inyección correcta
 
     @PostMapping("/crear-factura")
     public ResponseEntity<String> createInvoice(@RequestBody InvoiceRequest request) {
         try {
-            InvoiceValidator.validate(request);
-             Pet pet = petPort.findByidpet(request.getPet());
+            // ✅ Usamos el validador inyectado (ya no estático)
+            invoiceValidator.validate(request);
+
+            Pet pet = petPort.findByidpet(request.getPet());
             Owner owner = userPort.findByid(request.getOwner());
-            Order order = orderPort.findByorderId(request.getOrder());
+
+            Order order = null;
+            if (request.getOrder() != null) {
+                order = orderPort.findById(request.getOrder())
+                        .orElseThrow(() -> new InvalidInvoiceDataException("❌ La orden médica no existe con el ID proporcionado."));
+            }
 
             Invoices invoice = new Invoices(
-                    request.getIdInvoice(),
                     pet,
                     owner,
                     order,
@@ -58,7 +67,6 @@ public class InvoiceController {
                     request.getValue(),
                     request.getQuantity(),
                     request.getDate()
-                
             );
 
             invoiceService.generateInvoice(invoice);

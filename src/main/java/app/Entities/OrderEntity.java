@@ -1,70 +1,150 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+// src/main/java/app/Entities/OrderEntity.java
 package app.Entities;
 
-import app.domain.models.MedicalHistory;
-import app.domain.models.Owner;
-import app.domain.models.Pet;
-import app.domain.models.Veterinarian;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List; 
 
-/**
- *
- * @author yefer_cordoba
- */
 
-@Getter
-@Setter
 @Table(name = "orders")
 @Entity
 public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id; 
+    private String id;
 
     @Column(nullable = false)
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "owner_id", nullable = false)
     private UserEntity owner; 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "veterinarian_id", nullable = false)
     private UserEntity veterinarian; 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "pet_id", nullable = false)
-    private PetEntity pet; 
+    private PetEntity pet;
 
-    @Column(nullable = false)
-    private String details;
+    @Column(columnDefinition = "TEXT") 
+    private String description;
 
     @Column(nullable = false)
     private Boolean completed;
 
-    @OneToOne
-    @JoinColumn(name = "medical_history_id")
-    private MedicalHistoryEntity medication; 
+    @ManyToOne(fetch = FetchType.LAZY) 
+    @JoinColumn(name = "medical_history_id", nullable = true) 
+    private MedicalHistoryEntity medicalHistory; // Renombrado de 'medication' a 'medicalHistory'
 
-    public OrderEntity() {}
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true) 
+    private List<MedicationOrderItemEntity> medicationItems = new ArrayList<>(); 
 
-    public OrderEntity(String id, LocalDateTime date, UserEntity owner, UserEntity veterinarian, PetEntity pet, String details, Boolean completed, MedicalHistoryEntity medication) {
-        this.id = id;
+    public OrderEntity() {
+    }
+
+ 
+    public OrderEntity(LocalDateTime date, UserEntity owner, UserEntity veterinarian, PetEntity pet, String description, Boolean completed, MedicalHistoryEntity medicalHistory) {
         this.date = date;
         this.owner = owner;
         this.veterinarian = veterinarian;
         this.pet = pet;
-        this.details = details;
+        this.description = description;
         this.completed = completed;
-        this.medication = medication;
+        this.medicalHistory = medicalHistory;
+        // medicationItems se añadirán a través de setters o un método addMedicationItem
     }
 
-   
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntity owner) {
+        this.owner = owner;
+    }
+
+    public UserEntity getVeterinarian() {
+        return veterinarian;
+    }
+
+    public void setVeterinarian(UserEntity veterinarian) {
+        this.veterinarian = veterinarian;
+    }
+
+    public PetEntity getPet() {
+        return pet;
+    }
+
+    public void setPet(PetEntity pet) {
+        this.pet = pet;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
+    public MedicalHistoryEntity getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(MedicalHistoryEntity medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
+
+    public List<MedicationOrderItemEntity> getMedicationItems() {
+        return medicationItems;
+    }
+
+    public void setMedicationItems(List<MedicationOrderItemEntity> medicationItems) {
+        this.medicationItems = medicationItems;
+    }
+    
+    
+
+    // Método para añadir ítems, manteniendo la relación bidireccional
+    public void addMedicationItem(MedicationOrderItemEntity item) {
+        if (item != null) {
+            medicationItems.add(item);
+            item.setOrder(this); // Establece la relación inversa
+        }
+    }
+
+    // Método para remover ítems
+    public void removeMedicationItem(MedicationOrderItemEntity item) {
+        if (item != null) {
+            medicationItems.remove(item);
+            item.setOrder(null); // Desvincula la relación
+        }
+    }
 }

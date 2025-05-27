@@ -27,8 +27,8 @@ public class PetService {
         if (namepet == null || namepet.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ El nombre de la mascota no puede estar vacío.");
         }
-        if (agepet <= 0) {
-            throw new InvalidDataException("⚠️ La edad de la mascota debe ser mayor a cero.");
+        if (agepet <= 0 || agepet > 150) {
+            throw new InvalidDataException("⚠️ La edad de la mascota debe estar entre 1 y 150 años.");
         }
         if (racepet == null || racepet.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ La raza de la mascota no debe estar vacía.");
@@ -36,8 +36,8 @@ public class PetService {
         if (caracteristic == null || caracteristic.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ Las características de la mascota no deben estar vacías.");
         }
-        if (weight <= 0) {
-            throw new InvalidDataException("⚠️ El peso de la mascota debe ser mayor a cero.");
+        if (weight <= 0 || weight > 200) {
+            throw new InvalidDataException("⚠️ El peso de la mascota debe estar entre 0.1 y 200 kg.");
         }
         if (species == null || species.trim().isEmpty()) {
             throw new InvalidDataException("⚠️ La especie de la mascota no puede estar vacía.");

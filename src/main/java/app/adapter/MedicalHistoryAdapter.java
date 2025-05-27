@@ -5,6 +5,7 @@
 package app.adapter;
 
 import app.Converted.MedicalHistoryConverter;
+import app.Converted.MedicationOrderItemConverter;
 import app.Converted.UserConverter;
 import app.Entities.MedicalHistoryEntity;
 import app.Entities.OrderEntity;
@@ -29,11 +30,12 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
     private MedicalHistoryRepository medicalHistoryRepository;
     
     @Override
-    public void save(MedicalHistory history) {
+    public MedicalHistory save(MedicalHistory history) {
         
         MedicalHistoryEntity medicalHistoryEntity = convertToEntity(history);
-        
-        medicalHistoryRepository.save(medicalHistoryEntity);
+        MedicalHistoryEntity saveMedicalHistoryEntity = medicalHistoryRepository.save(medicalHistoryEntity);
+
+        return convertToDomain(saveMedicalHistoryEntity);
     }
        private MedicalHistoryEntity convertToEntity(MedicalHistory history) {
         if (history == null) {
@@ -121,14 +123,14 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
         }
 
         return new OrderEntity(
-                order.getId(),
+             
                 order.getDate(),
                 UserConverter.convertToUserEntity(order.getOwner()),
                 UserConverter.convertToUserEntity(order.getVeterinarian()),
                 convertToPetEntity(order.getPet()),
-                order.getDetails(),
+                order.getDescription(),
                 order.isCompleted(),
-                MedicalHistoryConverter.convertToEntity(order.getMedication())
+                MedicalHistoryConverter.convertToEntity(order.getMedicalHistory())
         );
     }
 
@@ -142,9 +144,10 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
                 convertToDomainPet(entity.getPet()),
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()),
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()),
-                (MedicalHistory)MedicalHistoryConverter.convertToDomain(entity.getMedication()),
+                (MedicalHistory)MedicalHistoryConverter.convertToDomain(entity.getMedicalHistory()),
+                 MedicationOrderItemConverter.convertToDomainList(entity.getMedicationItems()),
                 entity.getDate(),
-                entity.getDetails(),
+                entity.getDescription(),
                 entity.getCompleted()
         );
     }
@@ -189,14 +192,10 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
     }
 
     @Override
-    public void save(MedicalHistoryEntity historyEntity) {
-        medicalHistoryRepository.save(historyEntity); // 💾 Guarda el historial médico en la base de datos
+    public Optional<MedicalHistoryEntity> findMedicalHistoryEntityById(String id) {
+        return medicalHistoryRepository.findById(id);
     }
 
-    @Override
-    public List<MedicalHistoryEntity> findByPetIdEntity(String petId) {
-        return medicalHistoryRepository.findByPetId(petId); // 🐶 Busca todos los historiales de una mascota por su ID
-    }
 
 
 

@@ -4,12 +4,15 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\adapter\OrderAdapter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\adapter\PetAdapter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\adapter\UserAdapter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Converted\MedicalHistoryConverter.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Converted\MedicationOrderItemConverter.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Converted\MedicationOrderItemRequestConverter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Converted\OrderConverter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Converted\PetConverter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Converted\UserConverter.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\Administrator.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\Invoices.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\MedicalHistory.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\MedicationOrderItem.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\Order.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\Owner.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\models\Pet.java
@@ -24,6 +27,7 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\services\OrderService.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\domain\services\PetService.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\InvoiceEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\MedicalHistoryEntity.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\MedicationOrderItemEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\OrderEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\PetEntity.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\Entities\UserEntity.java
@@ -63,6 +67,7 @@ C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\OrderController.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\PetController.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\InvoiceRequest.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\MedicalHistoryRequest.java
+C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\MedicationOrderItemRequest.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\OrderRequest.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\PetRequest.java
 C:\Users\User\Desktop\CS2.1\src\main\java\app\rest\request\UserRequest.java

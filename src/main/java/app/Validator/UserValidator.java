@@ -8,7 +8,13 @@ import app.rest.request.UserRequest;
 
 
 public class UserValidator {
-
+    
+    public static void ValidateId(Long id){
+        if (id == 0) {
+           throw new IllegalArgumentException("El id del usuario no puede ser 0.");  
+            
+        }
+    }
     // Validar nombre de usuario
     public static void validateUsername(String username) {
         if (username == null || username.trim().isEmpty()) {
@@ -53,6 +59,7 @@ public class UserValidator {
 
     // Método para validar todos los campos a la vez
     public static void validate(UserRequest request) {
+        ValidateId(request.getId());
         validateUsername(request.getUsername());
         validateAge(request.getAge());
         validatePassword(request.getPassword());

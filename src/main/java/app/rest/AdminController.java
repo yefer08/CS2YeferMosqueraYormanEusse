@@ -39,6 +39,7 @@ public class AdminController {
             UserValidator.validate(request);
             
             User user = adminService.factory(
+                    request.getId(),
                     request.getName(),
                     request.getAge(),
                     request.getUsername(),

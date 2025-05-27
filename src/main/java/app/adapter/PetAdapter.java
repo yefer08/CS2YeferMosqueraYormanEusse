@@ -13,6 +13,7 @@ import app.ports.PetPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -81,13 +82,15 @@ public class PetAdapter implements PetPort {
     public void save(Pet pet) {
         PetEntity petEntity = PetConverter.convertToPetEntity(pet);
 
-        // 💡 Aquí está la magia:
-        if (pet.getIdOwnwer() != null && pet.getIdOwnwer().getId() != null) {
+        
+
+        if (Objects.nonNull(pet.getIdOwnwer()) && Objects.nonNull(pet.getIdOwnwer().getId())) {
             UserEntity ownerEntity = userRepository.findById(pet.getIdOwnwer().getId())
                     .orElseThrow(() -> new RuntimeException("❌ Dueño no encontrado con ID: " + pet.getIdOwnwer().getId()));
 
-            petEntity.setOwner(ownerEntity); // Asignas el dueño persistido
+            petEntity.setOwner(ownerEntity);
         }
+
 
         petRepository.save(petEntity);
     }
@@ -101,6 +104,12 @@ public class PetAdapter implements PetPort {
     public Optional<PetEntity> findPetEntityById(String petId) {
         return petRepository.findById(petId);
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return petRepository.existsById(id);
+    }
+
 
 
 }
