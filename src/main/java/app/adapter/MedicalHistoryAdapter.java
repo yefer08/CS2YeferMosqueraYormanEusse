@@ -145,7 +145,6 @@ public class MedicalHistoryAdapter implements MedicalHistoryPort{
                 (Owner) UserConverter.convertToDomainUser(entity.getOwner()),
                 (Veterinarian) UserConverter.convertToDomainUser(entity.getVeterinarian()),
                 (MedicalHistory)MedicalHistoryConverter.convertToDomain(entity.getMedicalHistory()),
-                 MedicationOrderItemConverter.convertToDomainList(entity.getMedicationItems()),
                 entity.getDate(),
                 entity.getDescription(),
                 entity.getCompleted()

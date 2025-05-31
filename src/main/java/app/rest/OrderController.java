@@ -68,7 +68,6 @@ public class OrderController {
             MedicalHistory medicalHistory = medicalHistoryport.findById(request.getMedicalHistoryId())
                     .orElseThrow(() -> new RuntimeException("❌ Historial médico no encontrado con ID: " + request.getMedicalHistoryId()));
             
-            List<MedicationOrderItem> medicationItems = MedicationOrderItemRequestConverter.convertToDomainList(request.getMedicationItems());
 
 
             Order order = new Order(
@@ -76,9 +75,8 @@ public class OrderController {
                     owner,
                     veterinarian,
                     medicalHistory,
-                    medicationItems, 
                     request.getDate(),
-                    request.getDetails(),
+                    request.getDescription(),
                     request.getCompleted()
             );
 

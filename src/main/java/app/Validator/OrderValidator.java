@@ -1,10 +1,8 @@
 package app.Validator;
 
 import app.exception.InvalidDataException;
-import app.rest.request.MedicationOrderItemRequest;
 import app.rest.request.OrderRequest;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class OrderValidator {
 
@@ -35,25 +33,6 @@ public class OrderValidator {
         }
     }
 
-    public static void validateMedicationItems(List<MedicationOrderItemRequest> medicationItems) {
-        if (medicationItems == null || medicationItems.isEmpty()) {
-            throw new InvalidDataException("⚠ La lista de medicamentos no puede estar vacía");
-        }
-
-        for (MedicationOrderItemRequest item : medicationItems) {
-            if (item == null) {
-                throw new InvalidDataException("⚠ No se permiten elementos nulos en la lista de medicamentos");
-            }
-            if (item.getMedicationName() == null || item.getMedicationName().trim().isEmpty()) {
-                throw new InvalidDataException("⚠ Cada medicamento debe tener un nombre válido");
-            }
-            if (item.getDose() == null || item.getDose().trim().isEmpty()) {
-                throw new InvalidDataException("⚠ Cada medicamento debe tener una dosis válida");
-            }
-            // Aquí puedes añadir más validaciones específicas para el DTO
-        }
-    }
-
     public static void validate(OrderRequest orderRequest) {
 
         if (orderRequest.getDate() == null) {
@@ -64,7 +43,6 @@ public class OrderValidator {
         validateOwner(orderRequest.getOwnerId());
         validateVeterinarian(orderRequest.getVeterinarianId());
         validatepet(orderRequest.getPetId());
-        validateMedicationItems(orderRequest.getMedicationItems());
 
     }
 }

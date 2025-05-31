@@ -5,8 +5,6 @@
 package app.infrastructure.repositories;
 
 import app.Entities.OrderEntity;
-import app.domain.models.Order;
-import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderServiceRepository extends JpaRepository<OrderEntity, String>  {

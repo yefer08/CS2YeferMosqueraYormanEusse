@@ -6,8 +6,8 @@ public class MedicationOrderItem {
     private String id; 
     private String medicationName;
     private String dose;
-    private int quantity; // Por ejemplo, número de pastillas, mililitros, etc.
-    private String instructions; // Ej: "Cada 8 horas por 7 días"
+    private int quantity;
+    private String instructions; 
 
     public MedicationOrderItem( String medicationName, String dose, int quantity, String instructions) {
         this.medicationName = medicationName;

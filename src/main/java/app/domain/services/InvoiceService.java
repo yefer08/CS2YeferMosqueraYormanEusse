@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package app.domain.services;
 
 import app.domain.models.Invoices;
@@ -19,10 +14,6 @@ import app.ports.InvoicePort;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- *
- * @author User
- */
 @Service
 public class InvoiceService {
 
@@ -40,40 +31,37 @@ public class InvoiceService {
     }
 
     public void generateInvoice(Invoices invoice) {
-        // 🔹 Generar ID automáticamente si es nulo
+     
         if (invoice.getIdInvoice() == null || invoice.getIdInvoice().isBlank()) {
             invoice.setIdInvoice(UUID.randomUUID().toString());
         }
 
-        // 🔹 Validar existencia de la mascota
-        Pet pet = petPort.findByidpet(invoice.getPet().getId());
-        if (pet == null) {
+
+        Pet petDomain = petPort.findByidpet(invoice.getPet().getId());
+        if (petDomain == null) {
             throw new InvalidInvoiceDataException("❌ Error: La mascota no existe.");
         }
+        invoice.setPet(petDomain);
 
-        // 🔹 Asignar ID del dueño a la factura
-        invoice.setOwner(pet.getIdOwnwer());
-
-        // 🔹 Validar existencia del dueño
-        Owner owner = userPort.findByid(invoice.getOwner().getId());
-        if (owner == null) {
+        
+        Owner ownerDomain = userPort.findByid(invoice.getOwner().getId());
+        if (ownerDomain == null) {
             throw new InvalidInvoiceDataException("❌ Error: El dueño no existe.");
         }
+        invoice.setOwner(ownerDomain);
 
-        // 🔹 Validar orden médica SOLO si es medicamento
-        if (invoice.getOrder() != null && invoice.getOrder().getId() != null) {
-            Optional<Order> order = orderPort.findById(invoice.getOrder().getId());
-
-            if (order.isEmpty()) {
-                throw new InvalidInvoiceDataException("❌ Error: La orden médica no existe.");
-            }
-
-            // Opcional: podrías setear la orden completa si la necesitas luego
-            invoice.setOrder(order.get());
+      
+        if (invoice.getOrder() == null || invoice.getOrder().getId() == null || invoice.getOrder().getId().isBlank()) {
+            throw new InvalidInvoiceDataException("❌ Error: La factura debe estar asociada a una orden médica válida. El ID de la orden no puede ser nulo o vacío.");
         }
 
+        Optional<Order> orderOptional = orderPort.findById(invoice.getOrder().getId());
 
-        // 🔹 Guardar la factura
+        if (orderOptional.isEmpty()) {
+            throw new InvalidInvoiceDataException("❌ Error: La orden médica proporcionada no existe en el sistema.");
+        }
+        invoice.setOrder(orderOptional.get()); 
+        
         invoicePort.save(invoice);
         System.out.println("✅ Factura generada con éxito. ID: " + invoice.getIdInvoice());
     }

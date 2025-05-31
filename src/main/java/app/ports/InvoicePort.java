@@ -6,10 +6,7 @@ package app.ports;
 
 import app.domain.models.Invoices;
 
-/**
- *
- * @author User
- */
+
 public interface InvoicePort {
 
     public void save(Invoices invoice);

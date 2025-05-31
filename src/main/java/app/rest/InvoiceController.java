@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.rest;
 
 import app.Validator.InvoiceValidator;
@@ -23,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @RestController
 @RequestMapping("/invoices")
 public class InvoiceController {
@@ -42,27 +36,30 @@ public class InvoiceController {
     private Orderport orderPort;
 
     @Autowired
-    private InvoiceValidator invoiceValidator; // ✅ Inyección correcta
+    private InvoiceValidator invoiceValidator;
 
     @PostMapping("/crear-factura")
     public ResponseEntity<String> createInvoice(@RequestBody InvoiceRequest request) {
         try {
-            // ✅ Usamos el validador inyectado (ya no estático)
+         
             invoiceValidator.validate(request);
 
             Pet pet = petPort.findByidpet(request.getPet());
             Owner owner = userPort.findByid(request.getOwner());
 
-            Order order = null;
-            if (request.getOrder() != null) {
-                order = orderPort.findById(request.getOrder())
-                        .orElseThrow(() -> new InvalidInvoiceDataException("❌ La orden médica no existe con el ID proporcionado."));
+            Order order = null; 
+
+            if (request.getOrder() == null || request.getOrder().isBlank()) {
+                throw new InvalidInvoiceDataException("❌ El ID de la orden médica es obligatorio y no puede ser nulo o vacío.");
             }
+
+            order = orderPort.findById(request.getOrder())
+                    .orElseThrow(() -> new InvalidInvoiceDataException("❌ La orden médica no existe con el ID proporcionado."));
 
             Invoices invoice = new Invoices(
                     pet,
                     owner,
-                    order,
+                    order, 
                     request.getProductName(),
                     request.getValue(),
                     request.getQuantity(),

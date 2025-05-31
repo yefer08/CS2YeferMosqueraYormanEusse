@@ -31,10 +31,7 @@ public class MedicationOrderItemEntity {
     @Column(columnDefinition = "TEXT") // Puede ser un texto más largo
     private String instructions;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Muchos ítems pueden pertenecer a una orden
-    @JoinColumn(name = "order_id", nullable = false) // Clave foránea a la tabla de órdenes
-    private OrderEntity order; // Referencia a la orden a la que pertenece este ítem
-
+  
     public MedicationOrderItemEntity() {
     }
 
@@ -43,7 +40,7 @@ public class MedicationOrderItemEntity {
         this.dose = dose;
         this.quantity = quantity;
         this.instructions = instructions;
-        this.order = order;
+   
     }
 
     public String getId() {
@@ -86,13 +83,7 @@ public class MedicationOrderItemEntity {
         this.instructions = instructions;
     }
 
-    public OrderEntity getOrder() {
-        return order;
-    }
 
-    public void setOrder(OrderEntity order) {
-        this.order = order;
-    }
 
    
 

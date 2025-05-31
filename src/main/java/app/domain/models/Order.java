@@ -15,18 +15,15 @@ public class Order {
     private Owner owner;
     private Veterinarian veterinarian; 
     private MedicalHistory medicalHistory;
-    private List<MedicationOrderItem> medicationItems;
-
     private LocalDateTime date;
     private String description; 
     private boolean completed;
     
-    public Order(Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medicalHistory, List<MedicationOrderItem> medicationItems, LocalDateTime date, String description, Boolean completed) {
+    public Order(Pet pet, Owner owner, Veterinarian veterinarian, MedicalHistory medicalHistory, LocalDateTime date, String description, Boolean completed) {
         this.pet = pet;
         this.owner = owner;
         this.veterinarian = veterinarian;
         this.medicalHistory = medicalHistory;
-        this.medicationItems = medicationItems;
         this.date = date;
         this.description = description;
         this.completed = completed;
@@ -75,14 +72,6 @@ public class Order {
 
     public void setMedicalHistory(MedicalHistory medicalHistory) {
         this.medicalHistory = medicalHistory;
-    }
-
-    public List<MedicationOrderItem> getMedicationItems() {
-        return medicationItems;
-    }
-
-    public void setMedicationItems(List<MedicationOrderItem> medicationItems) {
-        this.medicationItems = medicationItems;
     }
 
     public LocalDateTime getDate() {

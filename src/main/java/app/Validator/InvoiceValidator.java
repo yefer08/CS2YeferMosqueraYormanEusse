@@ -28,7 +28,6 @@ public class InvoiceValidator {
         this.orderPort = orderPort;
     }
 
-    // 🔹 Métodos ya no son estáticos, ahora pertenecen a la instancia
     public void validate(InvoiceRequest invoiceRequest) {
 
         validateDate(invoiceRequest.getDate().toLocalDate());
@@ -39,27 +38,22 @@ public class InvoiceValidator {
             validateOrder(invoiceRequest.getOrder());
         }
 
-        // 🔹 Generar ID automáticamente si es nulo
         if (invoiceRequest.getIdInvoice() == null || invoiceRequest.getIdInvoice().isBlank()) {
             invoiceRequest.setIdInvoice(UUID.randomUUID().toString());
         }
-
-        // 🔹 Validar existencia de la mascota
         Pet pet = petPort.findByidpet(invoiceRequest.getPet());
         if (pet == null) {
             throw new InvalidInvoiceDataException("❌ Error: La mascota no existe.");
         }
-
-        // 🔹 Asignar ID del dueño a la factura
+        
         invoiceRequest.setOwner(pet.getIdOwnwer().getId());
 
-        // 🔹 Validar existencia del dueño
         Owner owner = userPort.findByid(invoiceRequest.getOwner());
         if (owner == null) {
             throw new InvalidInvoiceDataException("❌ Error: El dueño no existe.");
         }
 
-        // 🔹 Validar orden médica SOLO si es medicamento
+     
         if (invoiceRequest.getOrder() != null && !invoiceRequest.getOrder().isEmpty()) {
             Optional<Order> optionalOrder = orderPort.findById(invoiceRequest.getOrder());
             if (optionalOrder.isEmpty()) {
@@ -68,7 +62,7 @@ public class InvoiceValidator {
         }
     }
 
-    // 🔹 Métodos auxiliares no son estáticos
+
     private void validateDate(LocalDate date) {
         if (date == null) {
             throw new InvalidInvoiceDataException("⚠ La fecha no puede estar vacía.");

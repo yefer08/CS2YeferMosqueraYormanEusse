@@ -40,8 +40,6 @@ public class OrderEntity {
     @JoinColumn(name = "medical_history_id", nullable = true) 
     private MedicalHistoryEntity medicalHistory; // Renombrado de 'medication' a 'medicalHistory'
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true) 
-    private List<MedicationOrderItemEntity> medicationItems = new ArrayList<>(); 
 
     public OrderEntity() {
     }
@@ -121,30 +119,5 @@ public class OrderEntity {
     public void setMedicalHistory(MedicalHistoryEntity medicalHistory) {
         this.medicalHistory = medicalHistory;
     }
-
-    public List<MedicationOrderItemEntity> getMedicationItems() {
-        return medicationItems;
-    }
-
-    public void setMedicationItems(List<MedicationOrderItemEntity> medicationItems) {
-        this.medicationItems = medicationItems;
-    }
-    
-    
-
-    // Método para añadir ítems, manteniendo la relación bidireccional
-    public void addMedicationItem(MedicationOrderItemEntity item) {
-        if (item != null) {
-            medicationItems.add(item);
-            item.setOrder(this); // Establece la relación inversa
-        }
-    }
-
-    // Método para remover ítems
-    public void removeMedicationItem(MedicationOrderItemEntity item) {
-        if (item != null) {
-            medicationItems.remove(item);
-            item.setOrder(null); // Desvincula la relación
-        }
-    }
+  
 }

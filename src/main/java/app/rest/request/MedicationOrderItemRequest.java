@@ -14,7 +14,7 @@ public class MedicationOrderItemRequest {
     private String id;
     private String medicationName;
     private String dose;
-    private int quantity; // Por ejemplo, número de pastillas, mililitros, etc.
+    private int quantity; 
     private String instructions;
 
     public MedicationOrderItemRequest(String id, String medicationName, String dose, int quantity, String instructions) {
